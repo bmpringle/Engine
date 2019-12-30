@@ -17,6 +17,10 @@ public class Scene {
         rootNode.addChild(Child)
     }
     
+    func getRootNode() -> Node {
+        return rootNode
+    }
+    
     func renderScene(renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
         rootNode.renderNode(renderEncoder, device)
     }
@@ -25,6 +29,21 @@ public class Scene {
 public class Node {
     var vertices: [SIMD4<Float>]?
     var children: [Node] = [Node]()
+    var worldMatrix: float4x4 = matrix_identity_float4x4
+    var type: MTLPrimitiveType = .triangle
+    
+    func move(xyz: SIMD3<Float>) {
+        worldMatrix[0][3] = worldMatrix[0][3]+xyz[0]
+        worldMatrix[1][3] = worldMatrix[1][3]+xyz[1]
+        worldMatrix[2][3] = worldMatrix[2][3]+xyz[2]
+        for i in 0..<children.count {
+            children[i].move(xyz: xyz)
+        }
+    }
+    
+    func getWorldMatrix() -> float4x4 {
+        return worldMatrix
+    }
     
     init(vertices: [SIMD4<Float>]?, children: [Node]?) {
         self.vertices = vertices
@@ -39,13 +58,23 @@ public class Node {
     func addChild(_ child: Node) {
         children.append(child)
     }
+
+    private func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
+        var worldVertices: [SIMD4<Float>] = []
+        
+        for i in 0..<vertices!.count {
+            worldVertices.append(vertices![i]*worldMatrix)
+        }
+        
+        let buffer = device.makeBuffer(bytes: worldVertices, length: worldVertices.count*MemoryLayout<SIMD4<Float>>.stride, options: [])
+        
+        renderEncoder.setVertexBuffer(buffer, offset: 0, index: 0)
+        renderEncoder.drawPrimitives(type: type, vertexStart: 0, vertexCount: worldVertices.count)
+    }
     
     func renderNode(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
         if(vertices != nil) {
-            let buffer = device.makeBuffer(bytes: vertices!, length: vertices!.count*MemoryLayout<SIMD4<Float>>.stride, options: [])
-            
-            renderEncoder.setVertexBuffer(buffer, offset: 0, index: 0)
-            renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: vertices!.count)
+            renderNodeInternal(renderEncoder, device)
         }
         renderChildren(renderEncoder, device)
 

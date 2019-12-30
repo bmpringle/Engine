@@ -16,7 +16,6 @@ struct Constants {
 vertex float4 vertex_shader(const device float4 *vertexArray [[buffer(0)]], const device Constants *constants [[buffer(1)]], unsigned int vid [[vertex_id]]) {
     float4 xyzw = vertexArray[vid];
     
-    
     float4 NDC = xyzw/constants->bounds;
     return NDC;
 }

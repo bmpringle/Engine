@@ -16,24 +16,12 @@ class Renderer: NSObject, MTKViewDelegate {
     var mtkView: MTKView!
     var scene: Scene!
     
-    let vertices = [
-        SIMD4<Float>(-50, 0, 0, 1),
-        SIMD4<Float>(0, 50, 0, 1),
-        SIMD4<Float>(50, 0, 0, 1)
-    ]
-    
-    let vertices2 = [
-        SIMD4<Float>(-50, 0, 0, 1),
-        SIMD4<Float>(0, -50, 0, 1),
-        SIMD4<Float>(50, 0, 0, 1)
-    ]
-    
     init(mtkView: MTKView) {
         super.init()
         self.mtkView = mtkView
         device = mtkView.device
         commandQueue = device.makeCommandQueue()
-        scene = createScene()
+        scene = Game.createScene()
         
         do {
             pipelineState = try buildRenderPipelineWith(device: device, metalKitView: mtkView)
@@ -65,8 +53,7 @@ class Renderer: NSObject, MTKViewDelegate {
         let encoder = buffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
         
         let constantsBuffer = device.makeBuffer(length: MemoryLayout<Constants>.size, options: [])!
-        var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
-        memcpy(constantsBuffer.contents(), &constants, MemoryLayout<Constants>.size)
+        memcpy(constantsBuffer.contents(), &Game.constants, MemoryLayout<Constants>.size)
         encoder.setVertexBuffer(constantsBuffer, offset: 0, index: 1)
         encoder.setRenderPipelineState(pipelineState)
         
@@ -76,15 +63,6 @@ class Renderer: NSObject, MTKViewDelegate {
         encoder.endEncoding()
         buffer.present(view.currentDrawable!)
         buffer.commit()
-    }
-    
-    func createScene() -> Scene {
-        let scene = Scene()
-        let node1 = Node(vertices: vertices, children: nil)
-        let node2 = Node(vertices: vertices2, children: nil)
-        scene.addChild(node1)
-        scene.addChild(node2)
-        return scene
     }
     
     func doSceneDraw(_ encoder: MTLRenderCommandEncoder) {

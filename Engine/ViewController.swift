@@ -15,7 +15,12 @@ class ViewController: NSViewController {
     var mtkView: MTKView {
         return view as! MTKView
     }
+    
     var renderer: Renderer!
+    
+    @objc func fireLogic() {
+        Game.fireLogic(viewController: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,6 +34,20 @@ class ViewController: NSViewController {
         renderer = Renderer(mtkView: mtkView)
         
         mtkView.delegate = renderer!
+        
+        Game.aspectRatio = Float(view.bounds.width/view.bounds.height)
+        
+        Timer.scheduledTimer(timeInterval: 1/60, target: self, selector: #selector(fireLogic), userInfo: nil, repeats: true)
+        
+        NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
+            guard let locWindow = self.view.window,
+            NSApplication.shared.keyWindow === locWindow else { return $0 }
+            if Game.keyHandler(with: $0, viewController: self) {
+              return nil
+           } else {
+              return $0
+           }
+        }
     }
 }
 
