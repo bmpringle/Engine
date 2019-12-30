@@ -1,5 +1,5 @@
 //
-//  Game.swift
+//  Pong.swift
 //  Engine
 //
 //  Created by Benjamin M. Pringle on 12/29/19.
@@ -11,7 +11,7 @@ import Metal
 import MetalKit
 
 //Pong impl. using the engine
-class Game {
+class Pong {
     static var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
     static var aspectRatio: Float = 16/10
     private static var p1MV = 0
@@ -19,25 +19,25 @@ class Game {
     private static var ballRadius: Float = 2
     
     static func fireLogic(viewController: ViewController) {
-        if(Game.gameOver || !Game.gameStart) {
+        if(gameOver || !gameStart) {
             
         }else{
-            Game.updateScene(renderer: viewController.mtkView.delegate as! Renderer)
+            updateScene(renderer: viewController.mtkView.delegate as! Renderer)
         }
     }
     
     static func createScene() -> Scene {
-        let vertices = [
-            SIMD4<Float>(-1, 20, 0, 1),
-            SIMD4<Float>(-1, -20, 0, 1),
-            SIMD4<Float>(1, -20, 0, 1),
+        let vertices: [PosAndColor] = [
+            PosAndColor(pos: SIMD4<Float>(-1, 20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
+            PosAndColor(pos: SIMD4<Float>(-1, -20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
+            PosAndColor(pos: SIMD4<Float>(1, -20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
             
-            SIMD4<Float>(-1, 20, 0, 1),
-            SIMD4<Float>(1, -20, 0, 1),
-            SIMD4<Float>(1, 20, 0, 1)
+            PosAndColor(pos: SIMD4<Float>(-1, 20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
+            PosAndColor(pos: SIMD4<Float>(1, -20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
+            PosAndColor(pos: SIMD4<Float>(1, 20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1))
         ]
         
-        var circle: [SIMD4<Float>] {
+        var circle: [PosAndColor] {
             let c = Circle(pointNumber: 30)
             c.setRadius(radius: ballRadius)
             return c.getVertices()
@@ -48,8 +48,8 @@ class Game {
         let node2 = Node(vertices: vertices, children: nil)
         let node3 = Node(vertices: circle, children: nil)
         
-        node1.move(xyz: SIMD3<Float>(-99, 0, 0))
-        node2.move(xyz: SIMD3<Float>(99, 0, 0))
+        node1.move(xyz: SIMD3<Float>(-98, 0, 0))
+        node2.move(xyz: SIMD3<Float>(98, 0, 0))
         scene.addChild(node1)
         scene.addChild(node2)
         scene.addChild(node3)

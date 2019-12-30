@@ -13,13 +13,21 @@ struct Constants {
     float4 bounds;
 };
 
-vertex float4 vertex_shader(const device float4 *vertexArray [[buffer(0)]], const device Constants *constants [[buffer(1)]], unsigned int vid [[vertex_id]]) {
-    float4 xyzw = vertexArray[vid];
+struct PosAndColor {
+    float4 pos [[position]];
+    float4 color;
+};
+
+vertex PosAndColor vertex_shader(const device PosAndColor *vertexColorArray [[buffer(0)]], const device Constants *constants [[buffer(1)]], unsigned int vid [[vertex_id]]) {
+    float4 xyzw = vertexColorArray[vid].pos;
     
     float4 NDC = xyzw/constants->bounds;
-    return NDC;
+    PosAndColor pac;
+    pac.pos = NDC;
+    pac.color = vertexColorArray[vid].color;
+    return pac;
 }
 
-fragment half4 fragment_shader(float4 in [[stage_in]]) {
-    return half4(1, 0, 0, 1);
+fragment float4 fragment_shader(PosAndColor in [[stage_in]]) {
+    return in.color;
 }

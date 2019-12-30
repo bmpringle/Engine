@@ -11,8 +11,9 @@ import simd
 
 public class Circle {
     var radius: Float = 1
-    var xyzw: [SIMD4<Float>] = [SIMD4<Float>]()
+    var xyzw: [PosAndColor] = [PosAndColor]()
     var pointNumber: Int
+    var color: SIMD4<Float> = SIMD4<Float>(1, 1, 1, 1)
     init(pointNumber: Int) {
         self.pointNumber = pointNumber
         calculateCircle()
@@ -28,8 +29,12 @@ public class Circle {
         calculateCircle()
     }
     
-    func getVertices() -> [SIMD4<Float>] {
+    func getVertices() -> [PosAndColor] {
         return xyzw
+    }
+    
+    func setColor(_ color: SIMD4<Float> ) {
+        self.color = color
     }
     
     func calculateCircle() {
@@ -44,9 +49,9 @@ public class Circle {
             let y = Game.aspectRatio*sin(radiansTriangle)*radius
             
             radiansTriangle = radiansTriangle + radiansInc
-            xyzw.append(SIMD4<Float>(0, 0, 0, 1))
-            xyzw.append(SIMD4<Float>(prevX, prevY, 0, 1))
-            xyzw.append(SIMD4<Float>(x, y, 0, 1))
+            xyzw.append(PosAndColor(pos: SIMD4<Float>(0, 0, 0, 1), color: color))
+            xyzw.append(PosAndColor(pos: SIMD4<Float>(prevX, prevY, 0, 1), color: color))
+            xyzw.append(PosAndColor(pos: SIMD4<Float>(x, y, 0, 1), color: color))
             
             prevX = x
             prevY = y

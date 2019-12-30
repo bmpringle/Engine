@@ -12,3 +12,8 @@ import simd
 struct Constants {
     var bounds: SIMD4<Float>
 }
+
+struct PosAndColor {
+    var pos: SIMD4<Float>;
+    var color: SIMD4<Float>;
+}

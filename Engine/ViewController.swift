@@ -11,6 +11,8 @@ import MetalKit
 import simd
 import Metal
 
+typealias Game = OpenWorld
+
 class ViewController: NSViewController {
     var mtkView: MTKView {
         return view as! MTKView
@@ -50,4 +52,3 @@ class ViewController: NSViewController {
         }
     }
 }
-

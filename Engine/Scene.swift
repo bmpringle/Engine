@@ -27,25 +27,36 @@ public class Scene {
 }
 
 public class Node {
-    var vertices: [SIMD4<Float>]?
+    var vertices: [PosAndColor]?
     var children: [Node] = [Node]()
-    var worldMatrix: float4x4 = matrix_identity_float4x4
+    var xyz: SIMD3<Float> = SIMD3<Float>(0, 0, 0)
+    var yaw: Float = 0
+    var pitch: Float = 0
+    var roll: Float = 0
     var type: MTLPrimitiveType = .triangle
     
     func move(xyz: SIMD3<Float>) {
-        worldMatrix[0][3] = worldMatrix[0][3]+xyz[0]
-        worldMatrix[1][3] = worldMatrix[1][3]+xyz[1]
-        worldMatrix[2][3] = worldMatrix[2][3]+xyz[2]
+        self.xyz = self.xyz+xyz
         for i in 0..<children.count {
             children[i].move(xyz: xyz)
         }
     }
     
-    func getWorldMatrix() -> float4x4 {
-        return worldMatrix
+    func rotate(xyz: SIMD3<Float>) {
+        yaw = yaw+xyz[0]
+        pitch = pitch+xyz[1]
+        roll = roll+xyz[2]
     }
     
-    init(vertices: [SIMD4<Float>]?, children: [Node]?) {
+    func getWorldMatrix() -> float4x4 {
+        let yMatrix = float4x4(SIMD4<Float>(1, 0, 0, 0), SIMD4<Float>(0, 1, cos(radians_from_degrees(yaw)), -sin(radians_from_degrees(yaw))), SIMD4<Float>(0, 0, sin(radians_from_degrees(yaw)), cos(radians_from_degrees(yaw))), SIMD4<Float>(0, 0, 0, 0))
+        let pMatrix = float4x4(SIMD4<Float>(cos(radians_from_degrees(pitch)), 0, sin(radians_from_degrees(pitch)), 0), SIMD4<Float>(0, 1, 0, 0), SIMD4<Float>(-sin(radians_from_degrees(pitch)), 0, cos(radians_from_degrees(pitch)), 0), SIMD4<Float>(0, 0, 0, 0))
+        let rMatrix = float4x4(SIMD4<Float>(cos(radians_from_degrees(roll)), -sin(radians_from_degrees(roll)), 0, 0), SIMD4<Float>(sin(radians_from_degrees(roll)), cos(radians_from_degrees(roll)), 0, 0), SIMD4<Float>(0, 0, 1, 0), SIMD4<Float>(0, 0, 0, 0))
+        let mvMatrix = float4x4(SIMD4<Float>(0, 0, 0, xyz[0]), SIMD4<Float>(0, 0, 0, xyz[1]), SIMD4<Float>(0, 0, 0, xyz[2]), SIMD4<Float>(0, 0, 0, 1))
+        return yMatrix*pMatrix*rMatrix+mvMatrix
+    }
+    
+    init(vertices: [PosAndColor]?, children: [Node]?) {
         self.vertices = vertices
         
         if(children != nil) {
@@ -60,13 +71,13 @@ public class Node {
     }
 
     private func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
-        var worldVertices: [SIMD4<Float>] = []
+        var worldVertices: [PosAndColor] = []
         
         for i in 0..<vertices!.count {
-            worldVertices.append(vertices![i]*worldMatrix)
+            worldVertices.append(PosAndColor(pos: vertices![i].pos*getWorldMatrix(), color: vertices![i].color))
         }
         
-        let buffer = device.makeBuffer(bytes: worldVertices, length: worldVertices.count*MemoryLayout<SIMD4<Float>>.stride, options: [])
+        let buffer = device.makeBuffer(bytes: worldVertices, length: worldVertices.count*MemoryLayout<PosAndColor>.stride, options: [])
         
         renderEncoder.setVertexBuffer(buffer, offset: 0, index: 0)
         renderEncoder.drawPrimitives(type: type, vertexStart: 0, vertexCount: worldVertices.count)
