@@ -14,6 +14,6 @@ struct Constants {
 }
 
 struct PosAndColor {
-    var pos: SIMD4<Float>;
-    var color: SIMD4<Float>;
+    var pos: SIMD4<Float>
+    var color: SIMD4<Float>
 }

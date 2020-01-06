@@ -35,6 +35,7 @@ public class Circle {
     
     func setColor(_ color: SIMD4<Float> ) {
         self.color = color
+        calculateCircle()
     }
     
     func calculateCircle() {

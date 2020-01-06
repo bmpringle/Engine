@@ -50,6 +50,7 @@ class Renderer: NSObject, MTKViewDelegate {
     func draw(in view: MTKView) {
         let buffer = commandQueue.makeCommandBuffer()!
         let renderDescriptor = view.currentRenderPassDescriptor!
+        renderDescriptor.colorAttachments[0].clearColor = scene.backgroundColor
         let encoder = buffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
         
         let constantsBuffer = device.makeBuffer(length: MemoryLayout<Constants>.size, options: [])!

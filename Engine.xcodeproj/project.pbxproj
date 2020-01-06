@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		BC1C2AB523B924E4000192BA /* Pong.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1C2AB423B924E4000192BA /* Pong.swift */; };
 		BC74B93323B9AEF90019AFA4 /* OpenWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */; };
+		BC7950BE23C144E500AC937C /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7950BD23C144E500AC937C /* Line.swift */; };
+		BC7B969323BEC92200BFF472 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969223BEC92200BFF472 /* Chess.swift */; };
+		BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969423BEC97800BFF472 /* TemplateGame.swift */; };
 		BCAA9A5323B7144100DB3E34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A5223B7144100DB3E34 /* AppDelegate.swift */; };
 		BCAA9A5523B7144100DB3E34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A5423B7144100DB3E34 /* ViewController.swift */; };
 		BCAA9A5723B7144500DB3E34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCAA9A5623B7144500DB3E34 /* Assets.xcassets */; };
@@ -20,7 +23,7 @@
 		BCAA9A8323B7FAC700DB3E34 /* StructDef.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A8223B7FAC700DB3E34 /* StructDef.swift */; };
 		BCAA9A8523B8085300DB3E34 /* Scene.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A8423B8085300DB3E34 /* Scene.swift */; };
 		BCAA9A8923B8653100DB3E34 /* Circle.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A8823B8653100DB3E34 /* Circle.swift */; };
-		BCB050D523BA892A008BBD90 /* Room.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB050D423BA892A008BBD90 /* Room.swift */; };
+		BCB050D523BA892A008BBD90 /* CPattern.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCB050D423BA892A008BBD90 /* CPattern.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -43,6 +46,9 @@
 /* Begin PBXFileReference section */
 		BC1C2AB423B924E4000192BA /* Pong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pong.swift; sourceTree = "<group>"; };
 		BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWorld.swift; sourceTree = "<group>"; };
+		BC7950BD23C144E500AC937C /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		BC7B969223BEC92200BFF472 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
+		BC7B969423BEC97800BFF472 /* TemplateGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGame.swift; sourceTree = "<group>"; };
 		BCAA9A4F23B7144100DB3E34 /* Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Engine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCAA9A5223B7144100DB3E34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCAA9A5423B7144100DB3E34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -61,7 +67,7 @@
 		BCAA9A8223B7FAC700DB3E34 /* StructDef.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StructDef.swift; sourceTree = "<group>"; };
 		BCAA9A8423B8085300DB3E34 /* Scene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scene.swift; sourceTree = "<group>"; };
 		BCAA9A8823B8653100DB3E34 /* Circle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Circle.swift; sourceTree = "<group>"; };
-		BCB050D423BA892A008BBD90 /* Room.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Room.swift; sourceTree = "<group>"; };
+		BCB050D423BA892A008BBD90 /* CPattern.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CPattern.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,7 +131,10 @@
 				BCAA9A8823B8653100DB3E34 /* Circle.swift */,
 				BC1C2AB423B924E4000192BA /* Pong.swift */,
 				BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */,
-				BCB050D423BA892A008BBD90 /* Room.swift */,
+				BCB050D423BA892A008BBD90 /* CPattern.swift */,
+				BC7B969223BEC92200BFF472 /* Chess.swift */,
+				BC7B969423BEC97800BFF472 /* TemplateGame.swift */,
+				BC7950BD23C144E500AC937C /* Line.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -281,13 +290,16 @@
 				BC74B93323B9AEF90019AFA4 /* OpenWorld.swift in Sources */,
 				BCAA9A8923B8653100DB3E34 /* Circle.swift in Sources */,
 				BC1C2AB523B924E4000192BA /* Pong.swift in Sources */,
+				BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */,
 				BCAA9A8323B7FAC700DB3E34 /* StructDef.swift in Sources */,
-				BCB050D523BA892A008BBD90 /* Room.swift in Sources */,
+				BCB050D523BA892A008BBD90 /* CPattern.swift in Sources */,
 				BCAA9A8123B71E9500DB3E34 /* Shaders.metal in Sources */,
+				BC7950BE23C144E500AC937C /* Line.swift in Sources */,
 				BCAA9A8523B8085300DB3E34 /* Scene.swift in Sources */,
 				BCAA9A5523B7144100DB3E34 /* ViewController.swift in Sources */,
 				BCAA9A7F23B7189600DB3E34 /* Renderer.swift in Sources */,
 				BCAA9A5323B7144100DB3E34 /* AppDelegate.swift in Sources */,
+				BC7B969323BEC92200BFF472 /* Chess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

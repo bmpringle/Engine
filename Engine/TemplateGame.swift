@@ -1,17 +1,19 @@
 //
-//  OpenWorld.swift
+//  TemplateGame.swift
 //  Engine
 //
-//  Created by Benjamin M. Pringle on 12/29/19.
-//  Copyright © 2019 Benjamin M. Pringle. All rights reserved.
+//  Created by Benjamin M. Pringle on 1/2/20.
+//  Copyright © 2020 Benjamin M. Pringle. All rights reserved.
 //
 
 import Foundation
 import Metal
 import MetalKit
 
-class OpenWorld {
+class TemplateGame {
     static var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
+    
+    //set in ViewController.viewDidLoad before anything else, no need to change
     static var aspectRatio: Float = 16/10
     
     static func fireLogic(viewController: ViewController) {
@@ -19,11 +21,7 @@ class OpenWorld {
     }
     
     static func createScene() -> Scene {
-        let scene = Scene()
-        let room = CPattern(3)
-        let rNode1 = room.createBoard(xTiles: 4, yTiles: 9, false)
-        scene.addChild(rNode1)
-        return scene
+        return Scene()
     }
 
     static func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {

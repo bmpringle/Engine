@@ -11,7 +11,7 @@ import MetalKit
 import simd
 import Metal
 
-typealias Game = OpenWorld
+typealias Game = Chess
 
 class ViewController: NSViewController {
     var mtkView: MTKView {
@@ -27,6 +27,8 @@ class ViewController: NSViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        Game.aspectRatio = Float(view.bounds.width/view.bounds.height)
+        
         mtkView.device = MTLCreateSystemDefaultDevice()
         mtkView.sampleCount = 4
         mtkView.colorPixelFormat = .bgra8Unorm_srgb
@@ -36,8 +38,6 @@ class ViewController: NSViewController {
         renderer = Renderer(mtkView: mtkView)
         
         mtkView.delegate = renderer!
-        
-        Game.aspectRatio = Float(view.bounds.width/view.bounds.height)
         
         Timer.scheduledTimer(timeInterval: 1/60, target: self, selector: #selector(fireLogic), userInfo: nil, repeats: true)
         
