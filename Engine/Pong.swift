@@ -44,9 +44,9 @@ class Pong {
         }
         
         let scene = Scene()
-        let node1 = Node(vertices: vertices, children: nil)
-        let node2 = Node(vertices: vertices, children: nil)
-        let node3 = Node(vertices: circle, children: nil)
+        let node1 = Node(vertices: vertices, children: nil, scene.getRootNode())
+        let node2 = Node(vertices: vertices, children: nil, scene.getRootNode())
+        let node3 = Node(vertices: circle, children: nil, scene.getRootNode())
         
         node1.move(xyz: SIMD3<Float>(-98, 0, 0))
         node2.move(xyz: SIMD3<Float>(98, 0, 0))

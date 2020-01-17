@@ -17,3 +17,9 @@ struct PosAndColor {
     var pos: SIMD4<Float>
     var color: SIMD4<Float>
 }
+
+struct PosAndColorTexture {
+    var pos: SIMD4<Float>
+    var color: SIMD4<Float>
+    var texCoords: SIMD2<Float>
+}

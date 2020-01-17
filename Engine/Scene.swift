@@ -12,7 +12,11 @@ import MetalKit
 
 public class Scene {
     public var backgroundColor: MTLClearColor = MTLClearColorMake(0, 0, 0, 0)
-    private var rootNode: Node = Node(vertices: nil, children: nil)
+    private var rootNode: Node = Node()
+    
+    func setAllocator(allocator: MTLAllocator) {
+        rootNode.allocator = allocator
+    }
     
     func addChild(_ Child: Node) {
         rootNode.addChild(Child)
@@ -26,8 +30,12 @@ public class Scene {
         backgroundColor = MTLClearColorMake(cc[0], cc[1], cc[2], cc[3])
     }
     
-    func renderScene(renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
-        rootNode.renderNode(renderEncoder, device)
+    func renderScene(renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!, _ descriptor: MTLRenderPipelineDescriptor) {
+        if(rootNode.allocator == nil) {
+            print("No allocator, cannot render scene")
+        } else {
+            rootNode.renderNode(renderEncoder, device, rootNode.allocator!, descriptor)
+        }
     }
 }
 
@@ -40,12 +48,33 @@ public class Node {
     var roll: Float = 0
     var type: MTLPrimitiveType = .triangle
     var scalar: Float = 1
+    var allocator: MTLAllocator?
+    var vertex_function = "vertex_shader"
+    var fragment_function = "fragment_shader"
+    var root_node: Node!
+    var texture_in_use = false
+    var texture_name = "Test"
     
     func move(xyz: SIMD3<Float>) {
         self.xyz = self.xyz+xyz
         for i in 0..<children.count {
             children[i].move(xyz: xyz)
         }
+    }
+    
+    func setTextureName(_ name: String) {
+        texture_name = name
+    }
+    
+    func createTexture() -> MTLTexture{
+        let textureLoader = MTKTextureLoader(device: root_node.allocator!.getDevice())
+        let texture = try! textureLoader.newTexture(name: texture_name, scaleFactor: 1, bundle: Bundle.main, options: [MTKTextureLoader.Option.origin: MTKTextureLoader.Origin.bottomLeft as NSObject])
+        
+        return texture
+    }
+    
+    func setRootNode(_ r: Node) {
+        root_node = r
     }
     
     func scale(_ scalar: Float) {
@@ -77,7 +106,7 @@ public class Node {
         return(scalar*(yMatrix*pMatrix*rMatrix))+mvMatrix
     }
     
-    init(vertices: [PosAndColor]?, children: [Node]?) {
+    init(vertices: [PosAndColor]?, children: [Node]?, _ root: Node) {
         self.vertices = vertices
         
         if(children != nil) {
@@ -85,35 +114,74 @@ public class Node {
                 self.children.append(children![i])
             }
         }
+        if((root) != nil) {
+            root_node = root
+        }
+    }
+ 
+    init(vertices: [PosAndColor]?, children: [Node]?, _ root: Node, _ texture: Bool) {
+        self.vertices = vertices
+        self.texture_in_use = texture
+        if(children != nil) {
+            for i in 0..<children!.count {
+                self.children.append(children![i])
+            }
+        }
+        if((root) != nil) {
+            root_node = root
+        }
+    }
+    
+    init() {
+        self.vertices = nil
+        self.root_node = nil
     }
     
     func addChild(_ child: Node) {
         children.append(child)
     }
 
-    private func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
-        var worldVertices: [PosAndColor] = []
+    private func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
+        var worldVertices: [PosAndColorTexture] = []
         
         for i in 0..<vertices!.count {
-                worldVertices.append(PosAndColor(pos: vertices![i].pos*getWorldMatrix(), color: vertices![i].color))
+            worldVertices.append(PosAndColorTexture(pos: vertices![i].pos*getWorldMatrix(), color: vertices![i].color, texCoords: SIMD2<Float>(vertices![i].pos[0], vertices![i].pos[1])))
         }
         
-        let buffer = device.makeBuffer(bytes: worldVertices, length: worldVertices.count*MemoryLayout<PosAndColor>.stride, options: [])
+        let lib = device.makeDefaultLibrary()
+        
+        if(vertex_function != "vertex_shader") {
+            descriptor.vertexFunction = lib?.makeFunction(name: vertex_function)
+        }
+        
+        if(fragment_function != "fragment_shader") {
+            descriptor.fragmentFunction = lib?.makeFunction(name: fragment_function)
+        }
+        
+        renderEncoder.setRenderPipelineState(try! device.makeRenderPipelineState(descriptor: descriptor))
+        
+        if(texture_in_use) {
+            renderEncoder.setFragmentTexture(createTexture(), index: 0)
+        }
+        
+        let buffer = allocator.getBuffer(bufByteAmnt: worldVertices.count*MemoryLayout<PosAndColorTexture>.stride, bytes: worldVertices)
         renderEncoder.setVertexBuffer(buffer, offset: 0, index: 0)
         renderEncoder.drawPrimitives(type: type, vertexStart: 0, vertexCount: worldVertices.count)
+        descriptor.vertexFunction = lib?.makeFunction(name: "vertex_shader")
+        descriptor.fragmentFunction = lib?.makeFunction(name: "fragment_color_shader")
     }
     
-    func renderNode(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
+    func renderNode(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
         if(vertices != nil) {
-            renderNodeInternal(renderEncoder, device)
+            renderNodeInternal(renderEncoder, device, allocator, descriptor)
         }
-        renderChildren(renderEncoder, device)
+        renderChildren(renderEncoder, device, allocator, descriptor)
 
     }
     
-    func renderChildren(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice!) {
+    func renderChildren(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
         for i in 0..<children.count {
-            children[i].renderNode(renderEncoder, device)
+            children[i].renderNode(renderEncoder, device, allocator, descriptor)
         }
     }
 }

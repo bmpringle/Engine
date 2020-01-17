@@ -26,9 +26,9 @@ class CPattern {
         col2 = col
     }
     
-    func createBoard(xTiles: Int, yTiles: Int, _ hNaL: Bool) -> Node {
-        let tiles: Node = Node(vertices: nil, children: nil)
-        let walls: Node = Node(vertices: nil, children: nil)
+    func createBoard(xTiles: Int, yTiles: Int, _ hNaL: Bool, scene: Scene) -> Node {
+        let tiles: Node = Node(vertices: nil, children: nil, scene.getRootNode())
+        let walls: Node = Node(vertices: nil, children: nil, scene.getRootNode())
         
         var colorSwitch = false
         for i in 0..<yTiles {
@@ -55,13 +55,43 @@ class CPattern {
                     PosAndColor(pos: SIMD4<Float>(x+tLength, y-tLength, 0, 1), color: color),
                     PosAndColor(pos: SIMD4<Float>(x+tLength, y, 0, 1), color: color)
                 ]
-                let tile = Node(vertices: tVerts, children: nil)
+                let tile = Node(vertices: tVerts, children: nil, scene.getRootNode())
                 if(hNaL) {
-                    if(xMV == 0) {
-                        let one = Node(vertices: nil, children: Line2D.ONE_TEXT)
-                        one.scale(tLength/4)
-                        one.move(xyz: SIMD3<Float>(-tLength, 0, 0))
-                        tile.addChild(one)
+                    if(j == 0) {
+                        let num = Node(vertices: Renderer.genericbox, children: nil, scene.getRootNode())
+                        num.fragment_function = "fragment_texture_shader"
+                        num.texture_in_use = true
+                        num.setTextureName("\(i+1)")
+                        num.scale(tLength/4)
+                        num.move(xyz: SIMD3<Float>(-tLength, -tLength/8, 0))
+                        tile.addChild(num)
+                    }
+                    if(j == xTiles-1) {
+                        let num = Node(vertices: Renderer.genericbox, children: nil, scene.getRootNode())
+                        num.fragment_function = "fragment_texture_shader"
+                        num.texture_in_use = true
+                        num.setTextureName("\(i+1)")
+                        num.scale(tLength/4)
+                        num.move(xyz: SIMD3<Float>(tLength, -tLength/8, 0))
+                        tile.addChild(num)
+                    }
+                    if(i == 0) {
+                        let letter = Node(vertices: Renderer.genericbox, children: nil, scene.getRootNode())
+                        letter.fragment_function = "fragment_texture_shader"
+                        letter.texture_in_use = true
+                        letter.setTextureName(letters[j].uppercased())
+                        letter.scale(tLength/4)
+                        letter.move(xyz: SIMD3<Float>(-tLength/8, -tLength, 0))
+                        tile.addChild(letter)
+                    }
+                    if(i == yTiles-1) {
+                        let letter = Node(vertices: Renderer.genericbox, children: nil, scene.getRootNode())
+                        letter.fragment_function = "fragment_texture_shader"
+                        letter.texture_in_use = true
+                        letter.setTextureName(letters[j].uppercased())
+                        letter.scale(tLength/4)
+                        letter.move(xyz: SIMD3<Float>(-tLength/8, tLength, 0))
+                        tile.addChild(letter)
                     }
                 }
                 tile.move(xyz: SIMD3<Float>(xMV, yMV, 0))
@@ -69,10 +99,13 @@ class CPattern {
                 colorSwitch = !colorSwitch
             }
         }
-        let room = Node(vertices: nil, children: [tiles, walls])
+        let room = Node(vertices: nil, children: [tiles, walls], scene.getRootNode())
         room.move(xyz: SIMD3<Float>(Float(xTiles) * -tLength/2+tLength/2, Float(yTiles) * -tLength/2+tLength/2, 0))
         return room
     }
+    
+    private var letters: [Character] = [ "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t", "u", "v", "w", "x", "y", "z"
+    ]
 }
 
 

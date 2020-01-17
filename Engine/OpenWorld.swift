@@ -21,7 +21,7 @@ class OpenWorld {
     static func createScene() -> Scene {
         let scene = Scene()
         let room = CPattern(3)
-        let rNode1 = room.createBoard(xTiles: 4, yTiles: 9, false)
+        let rNode1 = room.createBoard(xTiles: 4, yTiles: 9, false, scene: scene)
         scene.addChild(rNode1)
         return scene
     }

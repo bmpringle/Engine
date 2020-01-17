@@ -30,7 +30,7 @@ class ViewController: NSViewController {
         Game.aspectRatio = Float(view.bounds.width/view.bounds.height)
         
         mtkView.device = MTLCreateSystemDefaultDevice()
-        mtkView.sampleCount = 4
+        mtkView.sampleCount = 8
         mtkView.colorPixelFormat = .bgra8Unorm_srgb
         mtkView.depthStencilPixelFormat = .depth32Float
         
