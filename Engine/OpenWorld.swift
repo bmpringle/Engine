@@ -18,6 +18,10 @@ class OpenWorld {
 
     }
     
+    static func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+        return event
+    }
+    
     static func createScene() -> Scene {
         let scene = Scene()
         let room = CPattern(3)

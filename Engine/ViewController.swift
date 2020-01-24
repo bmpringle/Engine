@@ -50,5 +50,9 @@ class ViewController: NSViewController {
               return $0
            }
         }
+        
+        NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
+            return Game.mouseHandler(with: event, viewController: self)
+        }
     }
 }

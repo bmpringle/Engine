@@ -55,8 +55,19 @@ public class Node {
     var texture_in_use = false
     var texture_name = "Test"
     
+    func getXYZ() -> SIMD3<Float> {
+        return xyz
+    }
+    
     func move(xyz: SIMD3<Float>) {
         self.xyz = self.xyz+xyz
+        for i in 0..<children.count {
+            children[i].move(xyz: xyz)
+        }
+    }
+    
+    func set(xyz: SIMD3<Float>) {
+        self.xyz = xyz
         for i in 0..<children.count {
             children[i].move(xyz: xyz)
         }
@@ -158,7 +169,9 @@ public class Node {
             descriptor.fragmentFunction = lib?.makeFunction(name: fragment_function)
         }
         
-        renderEncoder.setRenderPipelineState(try! device.makeRenderPipelineState(descriptor: descriptor))
+        do {
+            renderEncoder.setRenderPipelineState(try! device.makeRenderPipelineState(descriptor: descriptor))
+        }
         
         if(texture_in_use) {
             renderEncoder.setFragmentTexture(createTexture(), index: 0)

@@ -31,7 +31,11 @@ class TemplateGame {
                 return false
        }
     }
-
+    
+    static func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+        return event
+    }
+    
     static func updateScene(renderer: Renderer) {
 
     }

@@ -26,6 +26,10 @@ class Pong {
         }
     }
     
+    static func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+        return event
+    }
+    
     static func createScene() -> Scene {
         let vertices: [PosAndColor] = [
             PosAndColor(pos: SIMD4<Float>(-1, 20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
