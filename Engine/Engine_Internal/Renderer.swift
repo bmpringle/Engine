@@ -25,13 +25,14 @@ class Renderer: NSObject, MTKViewDelegate {
         device = mtkView.device
         commandQueue = device.makeCommandQueue()
         scene = game.createScene()
-        scene.setAllocator(allocator: MTLAllocator(device: device, bufferAmnt: 1, bufferByteAmnts: [], mtkView))
         
         do {
-            pipelineState = try buildRenderPipelineWith(device: device, metalKitView: mtkView)
-        } catch {
-            print("Unable to compile render pipeline state: \(error)")
-        }
+           pipelineState = try buildRenderPipelineWith(device: device, metalKitView: mtkView)
+       } catch {
+           print("Unable to compile render pipeline state: \(error)")
+       }
+        
+        scene.setAllocator(allocator: MTLAllocator(device: device, bufferAmnt: 1, bufferByteAmnts: [], mtkView), desc: pipelineDescriptor)
     }
     
     func buildRenderPipelineWith(device: MTLDevice, metalKitView: MTKView) throws -> MTLRenderPipelineState {

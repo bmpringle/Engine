@@ -14,8 +14,9 @@ public class Scene {
     public var backgroundColor: MTLClearColor = MTLClearColorMake(0, 0, 0, 0)
     var rootNode: Node = Node()
     
-    func setAllocator(allocator: MTLAllocator) {
+    func setAllocator(allocator: MTLAllocator, desc: MTLRenderPipelineDescriptor) {
         rootNode.allocator = allocator
+        allocator.addPipelineStateWithDescriptor(descriptor: desc, ID: "default")
     }
     
     func addChild(_ Child: Node) {
@@ -150,16 +151,26 @@ public class Node {
         
         let lib = device.makeDefaultLibrary()
         
-        if(vertex_function != "vertex_shader") {
+        if(vertex_function != "vertex_shader" && allocator.getPipelineState(ID: vertex_function) == nil) {
             descriptor.vertexFunction = lib?.makeFunction(name: vertex_function)
+            allocator.addPipelineStateWithDescriptor(descriptor: descriptor, ID: vertex_function)
+        }
+        
+        if(fragment_function != "fragment_shader" && allocator.getPipelineState(ID: fragment_function) == nil) {
+            descriptor.fragmentFunction = lib?.makeFunction(name: fragment_function)
+            allocator.addPipelineStateWithDescriptor(descriptor: descriptor, ID: fragment_function)
         }
         
         if(fragment_function != "fragment_shader") {
-            descriptor.fragmentFunction = lib?.makeFunction(name: fragment_function)
-        }
-        
-        do {
-            renderEncoder.setRenderPipelineState(try! device.makeRenderPipelineState(descriptor: descriptor))
+            do {
+                renderEncoder.setRenderPipelineState(allocator.getPipelineState(ID: fragment_function)!)
+            }
+        }else if(vertex_function != "vertex_shader"){
+            do {
+                renderEncoder.setRenderPipelineState(allocator.getPipelineState(ID: vertex_function)!)
+            }
+        }else{
+            renderEncoder.setRenderPipelineState(allocator.getPipelineState(ID: "default")!)
         }
         
         if(texture_in_use) {

@@ -10,10 +10,16 @@ import Foundation
 import MetalKit
 import Metal
 
+struct IDAndState {
+    var state: MTLRenderPipelineState
+    var id: String
+}
+
 class MTLAllocator {
     var device: MTLDevice
     var buffers: [MTLBuffer] = [MTLBuffer]()
     var mtkView: MTKView
+    var states = [IDAndState]()
     
     init(device: MTLDevice, bufferAmnt: Int, bufferByteAmnts: [Int], _ mtV: MTKView) {
         mtkView = mtV
@@ -44,6 +50,19 @@ class MTLAllocator {
     
     func getDevice() -> MTLDevice {
         return device
+    }
+    
+    func addPipelineStateWithDescriptor(descriptor: MTLRenderPipelineDescriptor, ID: String) {
+        states.append(IDAndState(state: try! device.makeRenderPipelineState(descriptor: descriptor), id: ID))
+    }
+    
+    func getPipelineState(ID: String) -> MTLRenderPipelineState? {
+        for i in states {
+            if(i.id == ID) {
+                return i.state
+            }
+        }
+        return nil
     }
     
     func getTexture(descriptor: MTLTextureDescriptor) -> MTLTexture {
