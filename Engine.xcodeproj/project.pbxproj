@@ -10,6 +10,8 @@
 		BC1C2AB523B924E4000192BA /* Pong.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1C2AB423B924E4000192BA /* Pong.swift */; };
 		BC5520B223CFFACA007BD54B /* test.png in Resources */ = {isa = PBXBuildFile; fileRef = BC5520B123CFFACA007BD54B /* test.png */; };
 		BC5520B423D09347007BD54B /* One.png in Resources */ = {isa = PBXBuildFile; fileRef = BC5520B323D09347007BD54B /* One.png */; };
+		BC703F3823E070F80098AE66 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3723E070F80098AE66 /* Piece.swift */; };
+		BC703F3A23E0718D0098AE66 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3923E0718D0098AE66 /* Board.swift */; };
 		BC736A9523D1FCAE0016B2F2 /* Two.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9423D1FCAE0016B2F2 /* Two.png */; };
 		BC736A9823D1FFF90016B2F2 /* Four.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9623D1FFF90016B2F2 /* Four.png */; };
 		BC736A9923D1FFF90016B2F2 /* Three.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9723D1FFF90016B2F2 /* Three.png */; };
@@ -65,6 +67,8 @@
 		BC1C2AB423B924E4000192BA /* Pong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pong.swift; sourceTree = "<group>"; };
 		BC5520B123CFFACA007BD54B /* test.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = test.png; sourceTree = "<group>"; };
 		BC5520B323D09347007BD54B /* One.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = One.png; sourceTree = "<group>"; };
+		BC703F3723E070F80098AE66 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
+		BC703F3923E0718D0098AE66 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		BC736A9423D1FCAE0016B2F2 /* Two.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Two.png; sourceTree = "<group>"; };
 		BC736A9623D1FFF90016B2F2 /* Four.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Four.png; sourceTree = "<group>"; };
 		BC736A9723D1FFF90016B2F2 /* Three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Three.png; sourceTree = "<group>"; };
@@ -131,6 +135,60 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		BC703F3223E06FF30098AE66 /* Games */ = {
+			isa = PBXGroup;
+			children = (
+				BC703F3623E070600098AE66 /* OpenWorld */,
+				BC703F3523E0705A0098AE66 /* Pong */,
+				BC703F3423E0704E0098AE66 /* Chess */,
+			);
+			path = Games;
+			sourceTree = "<group>";
+		};
+		BC703F3323E0702B0098AE66 /* Engine_Internal */ = {
+			isa = PBXGroup;
+			children = (
+				BCAA9A5223B7144100DB3E34 /* AppDelegate.swift */,
+				BCAA9A5423B7144100DB3E34 /* ViewController.swift */,
+				BCAA9A7E23B7189600DB3E34 /* Renderer.swift */,
+				BCAA9A8023B71E9500DB3E34 /* Shaders.metal */,
+				BCAA9A8223B7FAC700DB3E34 /* StructDef.swift */,
+				BCAA9A8423B8085300DB3E34 /* Scene.swift */,
+				BCAA9A8823B8653100DB3E34 /* Circle.swift */,
+				BC7B969423BEC97800BFF472 /* TemplateGame.swift */,
+				BC7950BD23C144E500AC937C /* Line.swift */,
+				BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */,
+			);
+			path = Engine_Internal;
+			sourceTree = "<group>";
+		};
+		BC703F3423E0704E0098AE66 /* Chess */ = {
+			isa = PBXGroup;
+			children = (
+				BCB050D423BA892A008BBD90 /* CPattern.swift */,
+				BC7B969223BEC92200BFF472 /* Chess.swift */,
+				BC703F3723E070F80098AE66 /* Piece.swift */,
+				BC703F3923E0718D0098AE66 /* Board.swift */,
+			);
+			path = Chess;
+			sourceTree = "<group>";
+		};
+		BC703F3523E0705A0098AE66 /* Pong */ = {
+			isa = PBXGroup;
+			children = (
+				BC1C2AB423B924E4000192BA /* Pong.swift */,
+			);
+			path = Pong;
+			sourceTree = "<group>";
+		};
+		BC703F3623E070600098AE66 /* OpenWorld */ = {
+			isa = PBXGroup;
+			children = (
+				BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */,
+			);
+			path = OpenWorld;
+			sourceTree = "<group>";
+		};
 		BC736A8D23D0E2830016B2F2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
@@ -178,25 +236,13 @@
 		BCAA9A5123B7144100DB3E34 /* Engine */ = {
 			isa = PBXGroup;
 			children = (
+				BC703F3323E0702B0098AE66 /* Engine_Internal */,
+				BC703F3223E06FF30098AE66 /* Games */,
 				BC736A8D23D0E2830016B2F2 /* Assets */,
-				BCAA9A5223B7144100DB3E34 /* AppDelegate.swift */,
-				BCAA9A5423B7144100DB3E34 /* ViewController.swift */,
 				BCAA9A5623B7144500DB3E34 /* Assets.xcassets */,
 				BCAA9A5823B7144500DB3E34 /* Main.storyboard */,
 				BCAA9A5B23B7144500DB3E34 /* Info.plist */,
 				BCAA9A5C23B7144500DB3E34 /* Engine.entitlements */,
-				BCAA9A7E23B7189600DB3E34 /* Renderer.swift */,
-				BCAA9A8023B71E9500DB3E34 /* Shaders.metal */,
-				BCAA9A8223B7FAC700DB3E34 /* StructDef.swift */,
-				BCAA9A8423B8085300DB3E34 /* Scene.swift */,
-				BCAA9A8823B8653100DB3E34 /* Circle.swift */,
-				BC1C2AB423B924E4000192BA /* Pong.swift */,
-				BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */,
-				BCB050D423BA892A008BBD90 /* CPattern.swift */,
-				BC7B969223BEC92200BFF472 /* Chess.swift */,
-				BC7B969423BEC97800BFF472 /* TemplateGame.swift */,
-				BC7950BD23C144E500AC937C /* Line.swift */,
-				BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */,
 			);
 			path = Engine;
 			sourceTree = "<group>";
@@ -368,6 +414,7 @@
 			files = (
 				BC74B93323B9AEF90019AFA4 /* OpenWorld.swift in Sources */,
 				BCAA9A8923B8653100DB3E34 /* Circle.swift in Sources */,
+				BC703F3823E070F80098AE66 /* Piece.swift in Sources */,
 				BC1C2AB523B924E4000192BA /* Pong.swift in Sources */,
 				BC7D47C023C75B9F00E92E0D /* MTLAllocator.swift in Sources */,
 				BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */,
@@ -379,6 +426,7 @@
 				BCAA9A5523B7144100DB3E34 /* ViewController.swift in Sources */,
 				BCAA9A7F23B7189600DB3E34 /* Renderer.swift in Sources */,
 				BCAA9A5323B7144100DB3E34 /* AppDelegate.swift in Sources */,
+				BC703F3A23E0718D0098AE66 /* Board.swift in Sources */,
 				BC7B969323BEC92200BFF472 /* Chess.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

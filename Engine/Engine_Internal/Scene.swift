@@ -12,7 +12,7 @@ import MetalKit
 
 public class Scene {
     public var backgroundColor: MTLClearColor = MTLClearColorMake(0, 0, 0, 0)
-    private var rootNode: Node = Node()
+    var rootNode: Node = Node()
     
     func setAllocator(allocator: MTLAllocator) {
         rootNode.allocator = allocator
@@ -103,6 +103,22 @@ public class Node {
         for i in 0..<children.count {
             children[i].rotate(xyz: xyz)
         }
+    }
+    
+    func getVertexChildrenNodes() -> [Node] {
+        var nde = [Node]()
+        
+        for i in children {
+            if(i.vertices == nil) {
+                let nde2 = i.getVertexChildrenNodes()
+                for j in nde2 {
+                    nde.append(j)
+                }
+            }else {
+                nde.append(i)
+            }
+        }
+        return nde
     }
     
     func setPrimitiveType(_ t: MTLPrimitiveType) {

@@ -19,15 +19,16 @@ class ViewController: NSViewController {
     }
     
     var renderer: Renderer!
+    var game = Game()
     
     @objc func fireLogic() {
-        Game.fireLogic(viewController: self)
+        game.fireLogic(viewController: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        Game.aspectRatio = Float(view.bounds.width/view.bounds.height)
+        game.aspectRatio = Float(view.bounds.width/view.bounds.height)
         
         mtkView.device = MTLCreateSystemDefaultDevice()
         mtkView.sampleCount = 8
@@ -35,7 +36,7 @@ class ViewController: NSViewController {
         mtkView.depthStencilPixelFormat = .depth32Float
         
         //Create render class
-        renderer = Renderer(mtkView: mtkView)
+        renderer = Renderer(mtkView: mtkView, Game: game)
         
         mtkView.delegate = renderer!
         
@@ -44,7 +45,7 @@ class ViewController: NSViewController {
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
             guard let locWindow = self.view.window,
             NSApplication.shared.keyWindow === locWindow else { return $0 }
-            if Game.keyHandler(with: $0, viewController: self) {
+            if self.game.keyHandler(with: $0, viewController: self) {
               return nil
            } else {
               return $0
@@ -52,7 +53,7 @@ class ViewController: NSViewController {
         }
         
         NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
-            return Game.mouseHandler(with: event, viewController: self)
+            return self.game.mouseHandler(with: event, viewController: self)
         }
     }
 }

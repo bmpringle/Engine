@@ -16,13 +16,15 @@ class Renderer: NSObject, MTKViewDelegate {
     var mtkView: MTKView!
     var scene: Scene!
     var pipelineDescriptor: MTLRenderPipelineDescriptor!
+    var game: TemplateGame
     
-    init(mtkView: MTKView) {
+    init(mtkView: MTKView, Game: TemplateGame) {
+        self.game = Game
         super.init()
         self.mtkView = mtkView
         device = mtkView.device
         commandQueue = device.makeCommandQueue()
-        scene = Game.createScene()
+        scene = game.createScene()
         scene.setAllocator(allocator: MTLAllocator(device: device, bufferAmnt: 1, bufferByteAmnts: [], mtkView))
         
         do {
@@ -65,7 +67,7 @@ class Renderer: NSObject, MTKViewDelegate {
         let encoder = buffer.makeRenderCommandEncoder(descriptor: renderDescriptor)!
         
         let constantsBuffer = device.makeBuffer(length: MemoryLayout<Constants>.size, options: [])!
-        memcpy(constantsBuffer.contents(), &Game.constants, MemoryLayout<Constants>.size)
+        memcpy(constantsBuffer.contents(), &game.constants, MemoryLayout<Constants>.size)
         encoder.setVertexBuffer(constantsBuffer, offset: 0, index: 1)
         encoder.setRenderPipelineState(pipelineState)
         

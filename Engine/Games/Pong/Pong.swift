@@ -11,14 +11,12 @@ import Metal
 import MetalKit
 
 //Pong impl. using the engine
-class Pong {
-    static var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
-    static var aspectRatio: Float = 16/10
-    private static var p1MV = 0
-    private static var p2MV = 0
-    private static var ballRadius: Float = 2
+class Pong: TemplateGame {
+    private var p1MV = 0
+    private var p2MV = 0
+    private var ballRadius: Float = 2
     
-    static func fireLogic(viewController: ViewController) {
+    override func fireLogic(viewController: ViewController) {
         if(gameOver || !gameStart) {
             
         }else{
@@ -26,11 +24,11 @@ class Pong {
         }
     }
     
-    static func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
         return event
     }
     
-    static func createScene() -> Scene {
+    override func createScene() -> Scene {
         let vertices: [PosAndColor] = [
             PosAndColor(pos: SIMD4<Float>(-1, 20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
             PosAndColor(pos: SIMD4<Float>(-1, -20, 0, 1), color: SIMD4<Float>(1, 0, 0, 1)),
@@ -42,8 +40,8 @@ class Pong {
         ]
         
         var circle: [PosAndColor] {
-            let c = Circle(pointNumber: 30)
-            c.setRadius(radius: ballRadius)
+            let c = Circle(pointNumber: 30, aRatio: aspectRatio)
+            c.setRadius(radius: ballRadius, aspectRatio)
             return c.getVertices()
         }
         
@@ -60,7 +58,7 @@ class Pong {
         return scene
     }
 
-    static func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
        // handle keyDown only if current window has focus, i.e. is keyWindow
        switch Int( event.keyCode) {
        case 13:
@@ -93,12 +91,12 @@ class Pong {
        }
     }
     
-    private static var speed: Float = 1/10
-    private static var angle = SIMD2<Float>(Float(Int.random(in: 1 ... 10)), Float(Int.random(in: 1 ... 10)))
-    public static var gameStart = false
-    public static var gameOver = false
+    private var speed: Float = 1/10
+    private var angle = SIMD2<Float>(Float(Int.random(in: 1 ... 10)), Float(Int.random(in: 1 ... 10)))
+    public var gameStart = false
+    public var gameOver = false
 
-    static func updateScene(renderer: Renderer) {
+    override func updateScene(renderer: Renderer) {
         
         //Move Ball
         renderer.scene.getRootNode().children[2].move(xyz: SIMD3<Float>(angle[0]*speed, angle[1]*speed, 0))

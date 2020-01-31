@@ -10,19 +10,17 @@ import Foundation
 import Metal
 import MetalKit
 
-class OpenWorld {
-    static var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
-    static var aspectRatio: Float = 16/10
+class OpenWorld: TemplateGame {
     
-    static func fireLogic(viewController: ViewController) {
+    override func fireLogic(viewController: ViewController) {
 
     }
     
-    static func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
         return event
     }
     
-    static func createScene() -> Scene {
+    override func createScene() -> Scene {
         let scene = Scene()
         let room = CPattern(3)
         let rNode1 = room.createBoard(xTiles: 4, yTiles: 9, false, scene: scene)
@@ -30,7 +28,7 @@ class OpenWorld {
         return scene
     }
 
-    static func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
             default:
                 print(event.keyCode)
@@ -38,7 +36,7 @@ class OpenWorld {
        }
     }
 
-    static func updateScene(renderer: Renderer) {
+    override func updateScene(renderer: Renderer) {
 
     }
 }

@@ -11,20 +11,20 @@ import Metal
 import MetalKit
 
 class TemplateGame {
-    static var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
+    var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
     
     //set in ViewController.viewDidLoad before anything else, no need to change
-    static var aspectRatio: Float = 16/10
+    var aspectRatio: Float = 16/10
     
-    static func fireLogic(viewController: ViewController) {
+    func fireLogic(viewController: ViewController) {
 
     }
     
-    static func createScene() -> Scene {
+    func createScene() -> Scene {
         return Scene()
     }
 
-    static func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
             default:
                 print(event.keyCode)
@@ -32,11 +32,11 @@ class TemplateGame {
        }
     }
     
-    static func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
         return event
     }
     
-    static func updateScene(renderer: Renderer) {
+    func updateScene(renderer: Renderer) {
 
     }
 }
