@@ -37,9 +37,7 @@ class Chess: TemplateGame {
     override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
         var loc = SIMD2<Float>(Float(event.locationInWindow.x/viewController.view.bounds.size.width), Float(event.locationInWindow.y/viewController.view.bounds.size.height))
         loc = (loc*200)-100
-        print(loc)
         let block = board.getRecentClickBlock(loc)
-        print(selectedID)
         guard let piece = board.getPiece(block) else {
             board.setNoneSelected()
             if(selectedID != -1) {

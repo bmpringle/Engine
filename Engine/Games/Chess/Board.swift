@@ -193,11 +193,21 @@ class Board {
             }
         }
         
+        if(pieces[id].getType() == "pawn") {
+            if(getPiece(block) != nil) {
+                if(pieces[id].getColor() == Color.WHITE) {
+                    if(block == SIMD2<Int>(pos[0]+1, pos[1]+1) || block == SIMD2<Int>(pos[0]-1, pos[1]+1)) {
+                        movePieceInternal(id: id, place: block, magRev: false, "pwMVD")
+                    }
+                }
+            }
+        }
+        
         if(pos[0] != block[0] && pos[1] != block[1]) {
             if(abs(pos[0]-block[0]) == abs(pos[1]-block[1])) {
                 if(vectors.contains(SIMD2<Int>(1, 1))) {
                     if(magnitude.contains(abs(pos[1]-block[1]))) {
-                        movePieceInternal(id: id, place: block, magRev: false, "diagMV")
+                        movePieceInternal(id: id, place: block, magRev: false, "MV")
                         return
                     }
                 }
@@ -208,9 +218,9 @@ class Board {
                 if(vectors.contains(SIMD2<Int>(0, -1))) {
                     if(magnitude.contains(pos[1]-block[1])) {
                         if(piece.getType() == "pawn") {
-                            movePieceInternal(id: id, place: block, magRev: true, "downMV")
+                            movePieceInternal(id: id, place: block, magRev: true, "MV")
                         }else {
-                            movePieceInternal(id: id, place: block, magRev: false, "downMV")
+                            movePieceInternal(id: id, place: block, magRev: false, "MV")
                         }
                         return
                     }
@@ -219,9 +229,9 @@ class Board {
                 if(vectors.contains(SIMD2<Int>(0, 1))) {
                     if(magnitude.contains(block[1]-pos[1])) {
                         if(piece.getType() == "pawn") {
-                            movePieceInternal(id: id, place: block, magRev: true, "upMV")
+                            movePieceInternal(id: id, place: block, magRev: true, "MV")
                         }else {
-                            movePieceInternal(id: id, place: block, magRev: false, "upMV")
+                            movePieceInternal(id: id, place: block, magRev: false, "MV")
                         }
                         return
                     }
@@ -231,14 +241,14 @@ class Board {
             if(pos[0] > block[0]) {
                 if(vectors.contains(SIMD2<Int>(-1, 0))) {
                     if(magnitude.contains(pos[0]-block[0])) {
-                        movePieceInternal(id: id, place: block, magRev: false, "leftMV")
+                        movePieceInternal(id: id, place: block, magRev: false, "MV")
                         return
                     }
                 }
             }else if(pos[0] < block[0]){
                 if(vectors.contains(SIMD2<Int>(1, 0))) {
                     if(magnitude.contains(block[0]-pos[0])) {
-                        movePieceInternal(id: id, place: block, magRev: false, "rightMV")
+                        movePieceInternal(id: id, place: block, magRev: false, "MV")
                         return
                     }
                 }
@@ -251,58 +261,87 @@ class Board {
         let magnitude = piece.getMagnitudes()
         let vectors = piece.getMoveVectors()
         let pos = piece.getBoardPlace()
-        for p in pieces {
-            if(mv == "knMV") {
-                if(place == p.getBoardPlace()){
-                    removePiece(p.getID())
+        
+        var collideChecks = true
+        
+        if(piece.getType() == "king") {
+            //check and checkmate code here
+        }
+        
+        if(mv == "knMV") {
+            if(getPiece(place) != nil){
+                removePiece(getPiece(place)!.getID())
+            }
+            piece.setBoardPlace(place: place)
+            if(magRev) {
+                piece.removeMagnitude(2)
+            }
+        }
+        
+        if(mv == "pwMVD") {
+            collideChecks = true
+            
+            if(collideChecks) {
+                if(getPiece(place) != nil){
+                    removePiece(getPiece(place)!.getID())
                 }
-            }else if(mv == "diagMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
+                piece.setBoardPlace(place: place)
+                if(magRev) {
+                    piece.removeMagnitude(2)
                 }
-            }else if(mv == "upMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "downMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "leftMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "rightMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
+            }
+        }
+        
+        if(mv == "MV") {
+            var betweenX = Utilities.NumbersBetween(pos[0], place[0])
+            var betweenY = Utilities.NumbersBetween(pos[1], place[1])
+            
+            for i in betweenX {
+                for j in betweenY {
+                    if(getPiece(SIMD2<Int>(i, j)) != nil) {
+                        collideChecks = false
                     }
                 }
             }
             
-        }
-        
-        piece.setBoardPlace(place: place)
-        if(magRev) {
-            piece.removeMagnitude(2)
+            //This check exists because otherwise rooks and queens and pawns won't work.
+            if(piece.getType() == "rook" || piece.getType() == "queen" || piece.getType() == "pawn") {
+                if(betweenX.count > 0) {
+                    for i in betweenX {
+                        if(getPiece(SIMD2<Int>(i, pos[1])) != nil) {
+                            collideChecks = false
+                        }
+                    }
+                }else if(betweenY.count > 0) {
+                     for i in betweenY {
+                         if(getPiece(SIMD2<Int>(pos[0], i)) != nil) {
+                             collideChecks = false
+                         }
+                     }
+                }
+            }
+            
+            if(piece.getType() == "pawn") {
+                if(getPiece(place) != nil) {
+                    if(place == SIMD2<Int>(pos[0], pos[1]+1)) {
+                        collideChecks = false
+                    }
+                    
+                    if(place == SIMD2<Int>(pos[0], pos[1]-1)) {
+                        collideChecks = false
+                    }
+                }
+            }
+            
+            if(collideChecks) {
+                if(getPiece(place) != nil){
+                    removePiece(getPiece(place)!.getID())
+                }
+                piece.setBoardPlace(place: place)
+                if(magRev) {
+                    piece.removeMagnitude(2)
+                }
+            }
         }
         
         pieces[id] = piece

@@ -12,6 +12,7 @@
 		BC5520B423D09347007BD54B /* One.png in Resources */ = {isa = PBXBuildFile; fileRef = BC5520B323D09347007BD54B /* One.png */; };
 		BC703F3823E070F80098AE66 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3723E070F80098AE66 /* Piece.swift */; };
 		BC703F3A23E0718D0098AE66 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3923E0718D0098AE66 /* Board.swift */; };
+		BC703F3D23E46A890098AE66 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3C23E46A890098AE66 /* Utilities.swift */; };
 		BC736A9523D1FCAE0016B2F2 /* Two.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9423D1FCAE0016B2F2 /* Two.png */; };
 		BC736A9823D1FFF90016B2F2 /* Four.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9623D1FFF90016B2F2 /* Four.png */; };
 		BC736A9923D1FFF90016B2F2 /* Three.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9723D1FFF90016B2F2 /* Three.png */; };
@@ -69,6 +70,7 @@
 		BC5520B323D09347007BD54B /* One.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = One.png; sourceTree = "<group>"; };
 		BC703F3723E070F80098AE66 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		BC703F3923E0718D0098AE66 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
+		BC703F3C23E46A890098AE66 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BC736A9423D1FCAE0016B2F2 /* Two.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Two.png; sourceTree = "<group>"; };
 		BC736A9623D1FFF90016B2F2 /* Four.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Four.png; sourceTree = "<group>"; };
 		BC736A9723D1FFF90016B2F2 /* Three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Three.png; sourceTree = "<group>"; };
@@ -158,6 +160,7 @@
 				BC7B969423BEC97800BFF472 /* TemplateGame.swift */,
 				BC7950BD23C144E500AC937C /* Line.swift */,
 				BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */,
+				BC703F3C23E46A890098AE66 /* Utilities.swift */,
 			);
 			path = Engine_Internal;
 			sourceTree = "<group>";
@@ -422,6 +425,7 @@
 				BCB050D523BA892A008BBD90 /* CPattern.swift in Sources */,
 				BCAA9A8123B71E9500DB3E34 /* Shaders.metal in Sources */,
 				BC7950BE23C144E500AC937C /* Line.swift in Sources */,
+				BC703F3D23E46A890098AE66 /* Utilities.swift in Sources */,
 				BCAA9A8523B8085300DB3E34 /* Scene.swift in Sources */,
 				BCAA9A5523B7144100DB3E34 /* ViewController.swift in Sources */,
 				BCAA9A7F23B7189600DB3E34 /* Renderer.swift in Sources */,

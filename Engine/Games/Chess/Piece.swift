@@ -117,8 +117,6 @@ class PieceImpl: Node, Piece {
     
     func setBoardPlace(place: SIMD2<Int>) {
         self.move(xyz: SIMD3<Float>(-Float(self.place.x-place.x)*2*squareSize, -Float(self.place.y-place.y)*2*squareSize, 0))
-        print(SIMD3<Float>(Float(self.place.x-place.x)*2*squareSize, Float(self.place.y-place.y)*2*squareSize, 0))
-        print("\(ChessType): \(self.xyz)")
         self.place = place
     }
 }
