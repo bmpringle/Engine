@@ -55,139 +55,6 @@ class Board {
         addKing(SIMD2<Int>(5, 1), Color.WHITE)
     }
     
-    func tryMovePiece(_ id: Int, _ block: SIMD2<Int>) {
-        guard let piece = getPiece(id) else {
-            return
-        }
-        let magnitude = piece.getMagnitudes()
-        let vectors = piece.getMoveVectors()
-        let pos = piece.getBoardPlace()
-        
-        if(pieces[id].getType() == "knight") {
-            if(abs(pos[0] - block[0]) == 2) {
-                if(abs(pos[1]-block[1]) == 1) {
-                    movePieceInternal(id: id, place: block, magRev: false, "knMV")
-                    return
-                }
-            }else if(abs(pos[1] - block[1]) == 2) {
-                if(abs(pos[0]-block[0]) == 1) {
-                    movePieceInternal(id: id, place: block, magRev: false, "knMV")
-                    return
-                }
-            }
-        }
-        
-        if(pos[0] != block[0] && pos[1] != block[1]) {
-            if(abs(pos[0]-block[0]) == abs(pos[1]-block[1])) {
-                if(vectors.contains(SIMD2<Int>(1, 1))) {
-                    if(magnitude.contains(abs(pos[1]-block[1]))) {
-                        movePieceInternal(id: id, place: block, magRev: false, "diagMV")
-                        return
-                    }
-                }
-            }
-        }
-        if(pos[0] == block[0]) {
-            if(pos[1] > block[1]) {
-                if(vectors.contains(SIMD2<Int>(0, -1))) {
-                    if(magnitude.contains(pos[1]-block[1])) {
-                        movePieceInternal(id: id, place: block, magRev: false, "downMV")
-                        return
-                    }
-                }
-            }else if(pos[1] < block[1]){
-                if(vectors.contains(SIMD2<Int>(0, 1))) {
-                    if(magnitude.contains(block[1]-pos[1])) {
-                        if(piece.getType() == "pawn") {
-                            movePieceInternal(id: id, place: block, magRev: true, "upMV")
-                        }else {
-                            movePieceInternal(id: id, place: block, magRev: false, "upMV")
-                        }
-                        return
-                    }
-                }
-            }
-        }else if(pos[1] == block[1]) {
-            if(pos[0] > block[0]) {
-                if(vectors.contains(SIMD2<Int>(-1, 0))) {
-                    if(magnitude.contains(pos[0]-block[0])) {
-                        movePieceInternal(id: id, place: block, magRev: false, "leftMV")
-                        return
-                    }
-                }
-            }else if(pos[0] < block[0]){
-                if(vectors.contains(SIMD2<Int>(1, 0))) {
-                    if(magnitude.contains(block[0]-pos[0])) {
-                        movePieceInternal(id: id, place: block, magRev: false, "rightMV")
-                        return
-                    }
-                }
-            }
-        }
-    }
-    
-    func movePieceInternal(id: Int, place: SIMD2<Int>, magRev: Bool, _ mv: String) {
-        let piece = pieces[id]
-        let magnitude = piece.getMagnitudes()
-        let vectors = piece.getMoveVectors()
-        let pos = piece.getBoardPlace()
-        for p in pieces {
-            if(mv == "knMV") {
-                if(place == p.getBoardPlace()){
-                    removePiece(p.getID())
-                }
-            }else if(mv == "diagMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "upMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "downMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "leftMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }else if(mv == "rightMV") {
-                let collideChecks = true
-                
-                if(collideChecks) {
-                    if(place == p.getBoardPlace()){
-                        removePiece(p.getID())
-                    }
-                }
-            }
-            
-        }
-        
-        piece.setBoardPlace(place: place)
-        if(magRev) {
-            piece.removeMagnitude(2)
-        }
-        
-        pieces[id] = piece
-    }
-    
     func setSelected(_ piece: Piece) {
         for i in 0..<pieces.count {
             if(pieces[i].getID() == piece.getID()) {
@@ -302,5 +169,142 @@ class Board {
             }
         }
         return nil
+    }
+    
+    func tryMovePiece(_ id: Int, _ block: SIMD2<Int>) {
+        guard let piece = getPiece(id) else {
+            return
+        }
+        let magnitude = piece.getMagnitudes()
+        let vectors = piece.getMoveVectors()
+        let pos = piece.getBoardPlace()
+        
+        if(pieces[id].getType() == "knight") {
+            if(abs(pos[0] - block[0]) == 2) {
+                if(abs(pos[1]-block[1]) == 1) {
+                    movePieceInternal(id: id, place: block, magRev: false, "knMV")
+                    return
+                }
+            }else if(abs(pos[1] - block[1]) == 2) {
+                if(abs(pos[0]-block[0]) == 1) {
+                    movePieceInternal(id: id, place: block, magRev: false, "knMV")
+                    return
+                }
+            }
+        }
+        
+        if(pos[0] != block[0] && pos[1] != block[1]) {
+            if(abs(pos[0]-block[0]) == abs(pos[1]-block[1])) {
+                if(vectors.contains(SIMD2<Int>(1, 1))) {
+                    if(magnitude.contains(abs(pos[1]-block[1]))) {
+                        movePieceInternal(id: id, place: block, magRev: false, "diagMV")
+                        return
+                    }
+                }
+            }
+        }
+        if(pos[0] == block[0]) {
+            if(pos[1] > block[1]) {
+                if(vectors.contains(SIMD2<Int>(0, -1))) {
+                    if(magnitude.contains(pos[1]-block[1])) {
+                        if(piece.getType() == "pawn") {
+                            movePieceInternal(id: id, place: block, magRev: true, "downMV")
+                        }else {
+                            movePieceInternal(id: id, place: block, magRev: false, "downMV")
+                        }
+                        return
+                    }
+                }
+            }else if(pos[1] < block[1]){
+                if(vectors.contains(SIMD2<Int>(0, 1))) {
+                    if(magnitude.contains(block[1]-pos[1])) {
+                        if(piece.getType() == "pawn") {
+                            movePieceInternal(id: id, place: block, magRev: true, "upMV")
+                        }else {
+                            movePieceInternal(id: id, place: block, magRev: false, "upMV")
+                        }
+                        return
+                    }
+                }
+            }
+        }else if(pos[1] == block[1]) {
+            if(pos[0] > block[0]) {
+                if(vectors.contains(SIMD2<Int>(-1, 0))) {
+                    if(magnitude.contains(pos[0]-block[0])) {
+                        movePieceInternal(id: id, place: block, magRev: false, "leftMV")
+                        return
+                    }
+                }
+            }else if(pos[0] < block[0]){
+                if(vectors.contains(SIMD2<Int>(1, 0))) {
+                    if(magnitude.contains(block[0]-pos[0])) {
+                        movePieceInternal(id: id, place: block, magRev: false, "rightMV")
+                        return
+                    }
+                }
+            }
+        }
+    }
+    
+    func movePieceInternal(id: Int, place: SIMD2<Int>, magRev: Bool, _ mv: String) {
+        let piece = pieces[id]
+        let magnitude = piece.getMagnitudes()
+        let vectors = piece.getMoveVectors()
+        let pos = piece.getBoardPlace()
+        for p in pieces {
+            if(mv == "knMV") {
+                if(place == p.getBoardPlace()){
+                    removePiece(p.getID())
+                }
+            }else if(mv == "diagMV") {
+                let collideChecks = true
+                
+                if(collideChecks) {
+                    if(place == p.getBoardPlace()){
+                        removePiece(p.getID())
+                    }
+                }
+            }else if(mv == "upMV") {
+                let collideChecks = true
+                
+                if(collideChecks) {
+                    if(place == p.getBoardPlace()){
+                        removePiece(p.getID())
+                    }
+                }
+            }else if(mv == "downMV") {
+                let collideChecks = true
+                
+                if(collideChecks) {
+                    if(place == p.getBoardPlace()){
+                        removePiece(p.getID())
+                    }
+                }
+            }else if(mv == "leftMV") {
+                let collideChecks = true
+                
+                if(collideChecks) {
+                    if(place == p.getBoardPlace()){
+                        removePiece(p.getID())
+                    }
+                }
+            }else if(mv == "rightMV") {
+                let collideChecks = true
+                
+                if(collideChecks) {
+                    if(place == p.getBoardPlace()){
+                        removePiece(p.getID())
+                    }
+                }
+            }
+            
+        }
+        
+        piece.setBoardPlace(place: place)
+        if(magRev) {
+            piece.removeMagnitude(2)
+        }
+        
+        pieces[id] = piece
     }
 }

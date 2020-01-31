@@ -66,13 +66,6 @@ public class Node {
         }
     }
     
-    func set(xyz: SIMD3<Float>) {
-        self.xyz = xyz
-        for i in 0..<children.count {
-            children[i].move(xyz: xyz)
-        }
-    }
-    
     func setTextureName(_ name: String) {
         texture_name = name
     }
@@ -105,22 +98,6 @@ public class Node {
         }
     }
     
-    func getVertexChildrenNodes() -> [Node] {
-        var nde = [Node]()
-        
-        for i in children {
-            if(i.vertices == nil) {
-                let nde2 = i.getVertexChildrenNodes()
-                for j in nde2 {
-                    nde.append(j)
-                }
-            }else {
-                nde.append(i)
-            }
-        }
-        return nde
-    }
-    
     func setPrimitiveType(_ t: MTLPrimitiveType) {
         type = t
     }
@@ -141,9 +118,7 @@ public class Node {
                 self.children.append(children![i])
             }
         }
-        if((root) != nil) {
-            root_node = root
-        }
+        root_node = root
     }
  
     init(vertices: [PosAndColor]?, children: [Node]?, _ root: Node, _ texture: Bool) {
@@ -154,9 +129,7 @@ public class Node {
                 self.children.append(children![i])
             }
         }
-        if((root) != nil) {
-            root_node = root
-        }
+        root_node = root
     }
     
     init() {

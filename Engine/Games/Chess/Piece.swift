@@ -32,6 +32,15 @@ protocol Piece {
 
 class PieceImpl: Node, Piece {
     
+    private var ID: Int
+    private var moveVectors = [SIMD2<Int>]()
+    private var magnitudes = [Int]()
+    private var place: SIMD2<Int>
+    private var canSkipPieces = false
+    private var squareSize: Float = 0
+    private var ChessType: String = "Untyped"
+    private var color: Color
+    
     func removeMagnitude(_ magnitude: Int) {
         for i in 0..<self.magnitudes.count {
             if(magnitudes[i] == magnitude) {
@@ -65,15 +74,6 @@ class PieceImpl: Node, Piece {
     func getColor() -> Color {
         return color
     }
-    
-    private var ID: Int
-    private var moveVectors = [SIMD2<Int>]()
-    private var magnitudes = [Int]()
-    private var place: SIMD2<Int>
-    private var canSkipPieces = false
-    private var squareSize: Float = 0
-    private var ChessType: String = "Untyped"
-    private var color: Color
     
     init(_ vectors: [SIMD2<Int>], _ magnitudes: [Int], _ pos: SIMD2<Int>, _ canSkip: Bool, _ scene: Scene, _ tR: SIMD3<Float>, _ squareSize: Float, _ id: Int, _ type: String, _ color: Color) {
         self.color = color
