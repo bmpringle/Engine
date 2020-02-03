@@ -41,7 +41,7 @@ class Chess: TemplateGame {
         guard let piece = board.getPiece(block) else {
             board.setNoneSelected()
             if(selectedID != -1) {
-                board.tryMovePiece(selectedID, block)
+                board.tryMovePiece(selectedID, block, false)
                 selectedID = -1
             }
             return event
@@ -50,7 +50,7 @@ class Chess: TemplateGame {
             if(board.getPiece(selectedID)!.getColor() != piece.getColor()) {
                 board.setNoneSelected()
                 if(selectedID != -1) {
-                    board.tryMovePiece(selectedID, block)
+                    board.tryMovePiece(selectedID, block, false)
                     selectedID = -1
                 }
                 return event
