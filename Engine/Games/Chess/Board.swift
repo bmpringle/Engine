@@ -297,33 +297,29 @@ class Board {
             let betweenX = Utilities.NumbersBetween(pos[0], place[0])
             var betweenY = Utilities.NumbersBetween(pos[1], place[1])
             
-            for i in betweenX {
+            for i in 0..<betweenX.count {
                 if(place[0]-pos[0] == place[1]-pos[1]) {
-                    for j in betweenY {
-                        if(getPiece(SIMD2<Int>(i, j)) != nil) {
-                            collideChecks = false
-                        }
+                    if(getPiece(SIMD2<Int>(betweenX[i], betweenY[i])) != nil) {
+                        print(SIMD2<Int>(betweenX[i], betweenY[i]))
+                        collideChecks = false
                     }
                 }else {
-                    betweenY.reverse()
-                    for j in  betweenY {
-                        if(getPiece(SIMD2<Int>(i, j)) != nil) {
-                            collideChecks = false
-                        }
+                    if(getPiece(SIMD2<Int>(betweenX[i], betweenY[betweenY.count-1-i])) != nil) {
+                        print(SIMD2<Int>(betweenX[i], betweenY[i]))
+                        collideChecks = false
                     }
-                    betweenY.reverse()
                 }
             }
             
             //This check exists because otherwise rooks and queens and pawns won't work.
             if(piece.getType() == "rook" || piece.getType() == "queen" || piece.getType() == "pawn") {
-                if(betweenX.count > 0) {
+                if(betweenX.count > 0 && betweenY.count == 0) {
                     for i in betweenX {
                         if(getPiece(SIMD2<Int>(i, pos[1])) != nil) {
                             collideChecks = false
                         }
                     }
-                }else if(betweenY.count > 0) {
+                }else if(betweenY.count > 0 && betweenX.count == 0) {
                      for i in betweenY {
                          if(getPiece(SIMD2<Int>(pos[0], i)) != nil) {
                              collideChecks = false
