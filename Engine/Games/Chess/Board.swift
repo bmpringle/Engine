@@ -273,6 +273,7 @@ class Board {
                     piece.removeMagnitude(2)
                 }
             }
+            print("4")
             return true
         }
         
@@ -289,24 +290,28 @@ class Board {
                         piece.removeMagnitude(2)
                     }
                 }
+                print("y")
+                print("5")
                 return true
             }
         }
         
         if(mv == "MV") {
             let betweenX = Utilities.NumbersBetween(pos[0], place[0])
-            var betweenY = Utilities.NumbersBetween(pos[1], place[1])
+            let betweenY = Utilities.NumbersBetween(pos[1], place[1])
             
-            for i in 0..<betweenX.count {
-                if(place[0]-pos[0] == place[1]-pos[1]) {
-                    if(getPiece(SIMD2<Int>(betweenX[i], betweenY[i])) != nil) {
-                        print(SIMD2<Int>(betweenX[i], betweenY[i]))
-                        collideChecks = false
-                    }
-                }else {
-                    if(getPiece(SIMD2<Int>(betweenX[i], betweenY[betweenY.count-1-i])) != nil) {
-                        print(SIMD2<Int>(betweenX[i], betweenY[i]))
-                        collideChecks = false
+            if(betweenX.count == betweenY.count) {
+                for i in 0..<betweenX.count {
+                    if(place[0]-pos[0] == place[1]-pos[1]) {
+                        if(getPiece(SIMD2<Int>(betweenX[i], betweenY[i])) != nil) {
+                            print(SIMD2<Int>(betweenX[i], betweenY[i]))
+                            collideChecks = false
+                        }
+                    }else {
+                        if(getPiece(SIMD2<Int>(betweenX[i], betweenY[betweenY.count-1-i])) != nil) {
+                            print(SIMD2<Int>(betweenX[i], betweenY[i]))
+                            collideChecks = false
+                        }
                     }
                 }
             }
@@ -346,6 +351,8 @@ class Board {
                     if(isPieceInCheck(place, piece.getColor())) {
                         return false
                     }
+                }else{
+                  //  if(piece.get)
                 }
             }
             
@@ -363,6 +370,7 @@ class Board {
                     }
                 }
                 pieces[ID] = piece
+                print("6")
                 return true
             }
         }
@@ -372,23 +380,40 @@ class Board {
     }
     
     func isPieceInCheck(_ piece: SIMD2<Int>, _ color: Color) -> Bool {
-        let piecesCopy = pieces
-
+        
         for i in pieces {
             if(i.getType() != "king" && i.getColor() != color) {
                 print("?")
                 if(tryMovePiece(i.getID(), piece, true)) {
+                    if(i.getType() == "pawn") {
+                        return false
+                    }
+                    print(tryMovePiece(i.getID(), piece, true))
                     print("hi")
                     print(i.getColor())
                     print(i.getID())
                     print(i.getType())
                     print(color)
-                    pieces = piecesCopy
                     return true
+                }else {
+                    if(i.getType() == "pawn") {
+                        print("yo")
+                        if(i.getColor() == Color.BLACK) {
+                            print("yo1")
+                            if(piece[1] == i.getBoardPlace()[1]-1) {
+                                print("f")
+                                if(piece[0] == i.getBoardPlace()[0]+1 || piece[0] == i.getBoardPlace()[0]-1) {
+                                    print("l")
+                                    return true
+                                }
+                            }
+                        }else {
+                            
+                        }
+                    }
                 }
             }
         }
-        pieces = piecesCopy
         return false
     }
 }

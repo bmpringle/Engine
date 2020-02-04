@@ -13,6 +13,7 @@
 		BC703F3823E070F80098AE66 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3723E070F80098AE66 /* Piece.swift */; };
 		BC703F3A23E0718D0098AE66 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3923E0718D0098AE66 /* Board.swift */; };
 		BC703F3D23E46A890098AE66 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3C23E46A890098AE66 /* Utilities.swift */; };
+		BC71BAA923E9E8D9007AC994 /* LogicBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */; };
 		BC736A9523D1FCAE0016B2F2 /* Two.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9423D1FCAE0016B2F2 /* Two.png */; };
 		BC736A9823D1FFF90016B2F2 /* Four.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9623D1FFF90016B2F2 /* Four.png */; };
 		BC736A9923D1FFF90016B2F2 /* Three.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9723D1FFF90016B2F2 /* Three.png */; };
@@ -71,6 +72,7 @@
 		BC703F3723E070F80098AE66 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		BC703F3923E0718D0098AE66 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		BC703F3C23E46A890098AE66 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicBuffer.swift; sourceTree = "<group>"; };
 		BC736A9423D1FCAE0016B2F2 /* Two.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Two.png; sourceTree = "<group>"; };
 		BC736A9623D1FFF90016B2F2 /* Four.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Four.png; sourceTree = "<group>"; };
 		BC736A9723D1FFF90016B2F2 /* Three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Three.png; sourceTree = "<group>"; };
@@ -168,6 +170,7 @@
 		BC703F3423E0704E0098AE66 /* Chess */ = {
 			isa = PBXGroup;
 			children = (
+				BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */,
 				BCB050D423BA892A008BBD90 /* CPattern.swift */,
 				BC7B969223BEC92200BFF472 /* Chess.swift */,
 				BC703F3723E070F80098AE66 /* Piece.swift */,
@@ -419,6 +422,7 @@
 				BCAA9A8923B8653100DB3E34 /* Circle.swift in Sources */,
 				BC703F3823E070F80098AE66 /* Piece.swift in Sources */,
 				BC1C2AB523B924E4000192BA /* Pong.swift in Sources */,
+				BC71BAA923E9E8D9007AC994 /* LogicBuffer.swift in Sources */,
 				BC7D47C023C75B9F00E92E0D /* MTLAllocator.swift in Sources */,
 				BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */,
 				BCAA9A8323B7FAC700DB3E34 /* StructDef.swift in Sources */,

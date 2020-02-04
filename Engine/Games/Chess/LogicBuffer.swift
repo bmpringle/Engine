@@ -7,3 +7,15 @@
 //
 
 import Foundation
+
+class LogicBuffer<T> {
+    private var buffer: T!
+    
+    func setBuffer(_ any: T) {
+        buffer = any
+    }
+    
+    func getBuffer() -> T {
+        return buffer
+    }
+}

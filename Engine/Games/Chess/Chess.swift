@@ -63,7 +63,23 @@ class Chess: TemplateGame {
     }
     
     override func updateScene(renderer: Renderer) {
-
+        for i in 0..<board.getPieces().count {
+            if(board.getPieces()[i].getType() == "pawn") {
+                if(board.getPieces()[i].getColor() == Color.BLACK) {
+                    if(board.getPieces()[i].getBoardPlace()[1] == 1) {
+                        let p = board.getPieces()[i]
+                    //    p.type = "queen"
+                        board.pieces[i] = p
+                    }
+                }else {
+                    if(board.getPieces()[i].getBoardPlace()[1] == 8) {
+                        let p = board.getPieces()[i]
+                 //       p.type = "queen"
+                        board.pieces[i] = p
+                    }
+                }
+            }
+        }
     }
 }
 
