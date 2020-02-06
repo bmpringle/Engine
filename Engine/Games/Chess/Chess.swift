@@ -67,15 +67,31 @@ class Chess: TemplateGame {
             if(board.getPieces()[i].getType() == "pawn") {
                 if(board.getPieces()[i].getColor() == Color.BLACK) {
                     if(board.getPieces()[i].getBoardPlace()[1] == 1) {
+                        print("f")
                         let p = board.getPieces()[i]
-                    //    p.type = "queen"
-                        board.pieces[i] = p
+                        p.setType("queen")
+                        p.addMagnitude(2)
+                        p.addMagnitude(3)
+                        p.addMagnitude(4)
+                        p.addMagnitude(5)
+                        p.addMagnitude(6)
+                        p.addMagnitude(7)
+                        p.addMagnitude(8)
+                        p.setMoveVectors([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)])
                     }
                 }else {
                     if(board.getPieces()[i].getBoardPlace()[1] == 8) {
+                        print("g")
                         let p = board.getPieces()[i]
-                 //       p.type = "queen"
-                        board.pieces[i] = p
+                        p.setType("queen")
+                        p.addMagnitude(2)
+                        p.addMagnitude(3)
+                        p.addMagnitude(4)
+                        p.addMagnitude(5)
+                        p.addMagnitude(6)
+                        p.addMagnitude(7)
+                        p.addMagnitude(8)
+                        p.setMoveVectors([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)])
                     }
                 }
             }

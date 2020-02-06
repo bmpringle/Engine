@@ -126,6 +126,10 @@ class Board {
         ids = 1+ids
     }
     
+    func addQueen(_ pos: SIMD2<Int>, _ color: Color, _ id: Int) {
+        pieces[id] = PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, id, "queen", color)
+    }
+    
     func addKing(_ pos: SIMD2<Int>, _ color: Color) {
         pieces.append(PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1], pos, false, scene, topRight, squareSize, ids, "king", color))
         ids = 1+ids
@@ -273,7 +277,6 @@ class Board {
                     piece.removeMagnitude(2)
                 }
             }
-            print("4")
             return true
         }
         
@@ -290,8 +293,6 @@ class Board {
                         piece.removeMagnitude(2)
                     }
                 }
-                print("y")
-                print("5")
                 return true
             }
         }
@@ -348,15 +349,42 @@ class Board {
             //Check for kings (partial)
             if(!sim) {
                 if(piece.getType() == "king") {
-                    if(isPieceInCheck(place, piece.getColor())) {
+                    if(isPieceInCheck(place, piece.getColor(), nil)) {
                         return false
                     }
                 }else{
-                  //  if(piece.get)
+                    if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), nil)) {
+                        var ID = id
+                        var rem = false
+                        var formerPlace = piece.getBoardPlace()
+                        
+                        if(collideChecks) {
+                                if(!sim) {
+                                    if(getPiece(place) != nil) {
+                                        rem = true
+                                    }
+                                    piece.setBoardPlace(place: place)
+                                }
+                                pieces[ID] = piece
+                        }
+                        if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), place)) {
+                            piece.setBoardPlace(place: formerPlace)
+                            pieces[ID] = piece
+                            return false
+                        }
+                        if(magRev) {
+                            piece.removeMagnitude(2)
+                        }
+                        if(rem) {
+                            removePiece(getPiece(place)!.getID())
+                            ID = ID-1
+                            pieces[ID] = piece
+                        }
+                        return true
+                    }
                 }
             }
             
-            print(collideChecks)
             if(collideChecks) {
                 var ID = id
                 if(!sim) {
@@ -370,49 +398,51 @@ class Board {
                     }
                 }
                 pieces[ID] = piece
-                print("6")
                 return true
             }
         }
-        print("e")
         pieces[id] = piece
         return false
     }
     
-    func isPieceInCheck(_ piece: SIMD2<Int>, _ color: Color) -> Bool {
+    func getKing(_ color: Color) -> Piece {
+        for i in pieces {
+            if(i.getType() == "king" && i.getColor() == color) {
+                return i
+            }
+        }
+        print("Fricking Fricker")
+        return pieces[0]
+    }
+    
+    func isPieceInCheck(_ piece: SIMD2<Int>, _ color: Color, _ exclude: SIMD2<Int>?) -> Bool {
         
         for i in pieces {
-            if(i.getType() != "king" && i.getColor() != color) {
-                print("?")
-                if(tryMovePiece(i.getID(), piece, true)) {
-                    if(i.getType() == "pawn") {
-                        return false
-                    }
-                    print(tryMovePiece(i.getID(), piece, true))
-                    print("hi")
-                    print(i.getColor())
-                    print(i.getID())
-                    print(i.getType())
-                    print(color)
-                    return true
-                }else {
-                    if(i.getType() == "pawn") {
-                        print("yo")
-                        if(i.getColor() == Color.BLACK) {
-                            print("yo1")
-                            if(piece[1] == i.getBoardPlace()[1]-1) {
-                                print("f")
-                                if(piece[0] == i.getBoardPlace()[0]+1 || piece[0] == i.getBoardPlace()[0]-1) {
-                                    print("l")
-                                    return true
+            if((exclude != nil) && (exclude! == i.getBoardPlace())) {
+                
+            }else {
+                if(i.getType() != "king" && i.getColor() != color) {
+                    if(tryMovePiece(i.getID(), piece, true)) {
+                        if(i.getType() == "pawn") {
+                            return false
+                        }
+                        return true
+                    }else {
+                        if(i.getType() == "pawn") {
+                            if(i.getColor() == Color.BLACK) {
+                                if(piece[1] == i.getBoardPlace()[1]-1) {
+                                    if(piece[0] == i.getBoardPlace()[0]+1 || piece[0] == i.getBoardPlace()[0]-1) {
+                                        return true
+                                    }
                                 }
+                            }else {
+                                
                             }
-                        }else {
-                            
                         }
                     }
                 }
             }
+            
         }
         return false
     }

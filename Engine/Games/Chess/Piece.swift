@@ -28,6 +28,8 @@ protocol Piece {
     func removeMagnitude(_ magnitude: Int)
     func getColor() -> Color
     func delete()
+    func setType(_ type: String)
+    func setMoveVectors(_ vec: [SIMD2<Int>])
 }
 
 class PieceImpl: Node, Piece {
@@ -49,8 +51,16 @@ class PieceImpl: Node, Piece {
         }
     }
     
+    func setMoveVectors(_ vec: [SIMD2<Int>]) {
+        self.moveVectors = vec
+    }
+    
     func getType() -> String {
         return ChessType
+    }
+    
+    func setType(_ type: String) {
+        self.ChessType = type
     }
     
     func getMagnitudes() -> [Int] {
