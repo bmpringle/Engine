@@ -126,10 +126,6 @@ class Board {
         ids = 1+ids
     }
     
-    func addQueen(_ pos: SIMD2<Int>, _ color: Color, _ id: Int) {
-        pieces[id] = PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, id, "queen", color)
-    }
-    
     func addKing(_ pos: SIMD2<Int>, _ color: Color) {
         pieces.append(PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1], pos, false, scene, topRight, squareSize, ids, "king", color))
         ids = 1+ids

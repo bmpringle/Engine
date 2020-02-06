@@ -67,7 +67,6 @@ class Chess: TemplateGame {
             if(board.getPieces()[i].getType() == "pawn") {
                 if(board.getPieces()[i].getColor() == Color.BLACK) {
                     if(board.getPieces()[i].getBoardPlace()[1] == 1) {
-                        print("f")
                         let p = board.getPieces()[i]
                         p.setType("queen")
                         p.addMagnitude(2)
@@ -81,7 +80,6 @@ class Chess: TemplateGame {
                     }
                 }else {
                     if(board.getPieces()[i].getBoardPlace()[1] == 8) {
-                        print("g")
                         let p = board.getPieces()[i]
                         p.setType("queen")
                         p.addMagnitude(2)
