@@ -342,8 +342,12 @@ class Board {
                             piece.removeMagnitude(2)
                         }
                         if(rem) {
+                            let dPieceID = getPiece(place)!.getID()
+                            if(dPieceID < ID) {
+                                ID = ID-1
+                            }
                             removePiece(getPiece(place)!.getID())
-                            ID = ID-1
+                            piece.setID(id: ID)
                             pieces[ID] = piece
                         }
                         return true
@@ -352,13 +356,21 @@ class Board {
             }
             
             if(!sim) {
+                var ID = id
+                
                 if(getPiece(place) != nil){
+                    let dPieceID = getPiece(place)!.getID()
+                    if(dPieceID < ID) {
+                        ID = ID-1
+                    }
                     removePiece(getPiece(place)!.getID())
                 }
                 piece.setBoardPlace(place: place)
                 if(magRev) {
                     piece.removeMagnitude(2)
                 }
+                piece.setID(id: ID)
+                pieces[ID] = piece
             }
             return true
         }
@@ -396,8 +408,12 @@ class Board {
                             piece.removeMagnitude(2)
                         }
                         if(rem) {
+                            let dPieceID = getPiece(place)!.getID()
+                            if(dPieceID < ID) {
+                                ID = ID-1
+                            }
                             removePiece(getPiece(place)!.getID())
-                            ID = ID-1
+                            piece.setID(id: ID)
                             pieces[ID] = piece
                         }
                         return true
@@ -406,14 +422,22 @@ class Board {
             }
             
             if(collideChecks) {
+                var ID = id
+                
                 if(!sim) {
                     if(getPiece(place) != nil){
+                        let dPieceID = getPiece(place)!.getID()
+                        if(dPieceID < ID) {
+                            ID = ID-1
+                        }
                         removePiece(getPiece(place)!.getID())
                     }
                     piece.setBoardPlace(place: place)
                     if(magRev) {
                         piece.removeMagnitude(2)
                     }
+                    piece.setID(id: ID)
+                    pieces[ID] = piece
                 }
                 return true
             }
@@ -496,8 +520,12 @@ class Board {
                             piece.removeMagnitude(2)
                         }
                         if(rem) {
+                            let dPieceID = getPiece(place)!.getID()
+                            if(dPieceID < ID) {
+                                ID = ID-1
+                            }
                             removePiece(getPiece(place)!.getID())
-                            ID = ID-1
+                            piece.setID(id: ID)
                             pieces[ID] = piece
                         }
                         return true
@@ -509,14 +537,18 @@ class Board {
                 var ID = id
                 if(!sim) {
                     if(getPiece(place) != nil) {
+                        let dPieceID = getPiece(place)!.getID()
+                        if(dPieceID < ID) {
+                            ID = ID-1
+                        }
                         removePiece(getPiece(place)!.getID())
-                        ID = ID-1
                     }
                     piece.setBoardPlace(place: place)
                     if(magRev) {
                         piece.removeMagnitude(2)
                     }
                 }
+                piece.setID(id: ID)
                 pieces[ID] = piece
                 return true
             }

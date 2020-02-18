@@ -82,36 +82,21 @@ class Chess: TemplateGame {
     override func updateScene(renderer: Renderer) {
         for i in 0..<board.getPieces().count {
             if(board.getPieces()[i].getType() == "pawn") {
-                if(board.getPieces()[i].getColor() == Color.BLACK) {
-                    if(board.getPieces()[i].getBoardPlace()[1] == 1) {
-                        let p = board.getPieces()[i]
-                        p.setType("queen")
-                        p.addMagnitude(2)
-                        p.addMagnitude(3)
-                        p.addMagnitude(4)
-                        p.addMagnitude(5)
-                        p.addMagnitude(6)
-                        p.addMagnitude(7)
-                        p.addMagnitude(8)
-                        p.setMoveVectors([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)])
-                        if(p.getColor() == Color.BLACK) {
-                            (p as! PieceImpl).setTextureName("blackqueen")
-                        }else {
-                            (p as! PieceImpl).setTextureName("whitequeen")
-                        }
-                    }
-                }else {
-                    if(board.getPieces()[i].getBoardPlace()[1] == 8) {
-                        let p = board.getPieces()[i]
-                        p.setType("queen")
-                        p.addMagnitude(2)
-                        p.addMagnitude(3)
-                        p.addMagnitude(4)
-                        p.addMagnitude(5)
-                        p.addMagnitude(6)
-                        p.addMagnitude(7)
-                        p.addMagnitude(8)
-                        p.setMoveVectors([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)])
+                if(board.getPieces()[i].getBoardPlace()[1] == 1 || board.getPieces()[i].getBoardPlace()[1] == 8) {
+                    let p = board.getPieces()[i]
+                    p.setType("queen")
+                    p.addMagnitude(2)
+                    p.addMagnitude(3)
+                    p.addMagnitude(4)
+                    p.addMagnitude(5)
+                    p.addMagnitude(6)
+                    p.addMagnitude(7)
+                    p.addMagnitude(8)
+                    p.setMoveVectors([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)])
+                    if(p.getColor() == Color.BLACK) {
+                        (p as! PieceImpl).setTextureName("blackqueen")
+                    }else {
+                        (p as! PieceImpl).setTextureName("whitequeen")
                     }
                 }
             }
