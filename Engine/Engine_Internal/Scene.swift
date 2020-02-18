@@ -72,10 +72,32 @@ public class Node {
     }
     
     func createTexture() -> MTLTexture{
-        let textureLoader = MTKTextureLoader(device: root_node.allocator!.getDevice())
-        let texture = try! textureLoader.newTexture(name: texture_name, scaleFactor: 1, bundle: Bundle.main, options: [MTKTextureLoader.Option.origin: MTKTextureLoader.Origin.bottomLeft as NSObject])
+        let nsimage = NSImage(named: NSImage.Name(texture_name))
+       
+        let image = nsimage?.cgImage(forProposedRect: nil, context: nil, hints: nil)
         
-        return texture
+        let desc = MTLTextureDescriptor()
+        desc.pixelFormat = .bgra8Unorm_srgb
+        desc.width = image!.width
+        desc.height = image!.height
+        
+        let texture: MTLTexture? = root_node.allocator?.getTexture(descriptor: desc)
+        
+        let reigon: MTLRegion = MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: image!.width, height: image!.height, depth: 1))
+        
+        let nsdata: NSMutableData = NSMutableData(data: (nsimage?.tiffRepresentation)!)
+        let nsdatacopy: NSMutableData = nsdata.mutableCopy() as! NSMutableData
+        
+        let bytesPerRow = image!.bytesPerRow
+        let rows = image?.height
+        
+        for i in 0..<rows! {
+            nsdatacopy.replaceBytes(in: NSRange(location: rows!*bytesPerRow-(i*bytesPerRow)-bytesPerRow, length: bytesPerRow), withBytes: NSData(data: nsdata.subdata(with: NSRange(location: i*bytesPerRow, length: bytesPerRow))).bytes)
+        }
+        
+        texture?.replace(region: reigon, mipmapLevel: 0, withBytes: nsdatacopy.bytes, bytesPerRow: image!.bytesPerRow)
+    
+        return texture!
     }
     
     func setRootNode(_ r: Node) {

@@ -51,7 +51,7 @@ public class Circle {
         var prevX = radius
         var prevY: Float = 0
         
-        for i in 0..<pointNumber {
+        for _ in 0..<pointNumber {
             let x = cos(radiansTriangle)*radius
             let y = aRatioStrd*sin(radiansTriangle)*radius
             

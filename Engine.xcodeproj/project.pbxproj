@@ -14,6 +14,15 @@
 		BC703F3A23E0718D0098AE66 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3923E0718D0098AE66 /* Board.swift */; };
 		BC703F3D23E46A890098AE66 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3C23E46A890098AE66 /* Utilities.swift */; };
 		BC71BAA923E9E8D9007AC994 /* LogicBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */; };
+		BC71BAAB23EC955B007AC994 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BC71BAAA23EC955B007AC994 /* README.md */; };
+		BC72078E23F751A7004F6F1E /* KingBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72078D23F751A7004F6F1E /* KingBlack.png */; };
+		BC72079023FB219D004F6F1E /* KingWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72078F23FB219D004F6F1E /* KingWhite.png */; };
+		BC72079223FB7975004F6F1E /* RookWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72079123FB7975004F6F1E /* RookWhite.png */; };
+		BC72079423FB7A13004F6F1E /* RookBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72079323FB7A13004F6F1E /* RookBlack.png */; };
+		BC72079723FB88F4004F6F1E /* BishopWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72079523FB88F3004F6F1E /* BishopWhite.png */; };
+		BC72079823FB88F4004F6F1E /* BishopBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72079623FB88F4004F6F1E /* BishopBlack.png */; };
+		BC72079A23FB9027004F6F1E /* KnightWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72079923FB9026004F6F1E /* KnightWhite.png */; };
+		BC72079C23FB90AD004F6F1E /* KnightBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72079B23FB90AD004F6F1E /* KnightBlack.png */; };
 		BC736A9523D1FCAE0016B2F2 /* Two.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9423D1FCAE0016B2F2 /* Two.png */; };
 		BC736A9823D1FFF90016B2F2 /* Four.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9623D1FFF90016B2F2 /* Four.png */; };
 		BC736A9923D1FFF90016B2F2 /* Three.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736A9723D1FFF90016B2F2 /* Three.png */; };
@@ -34,6 +43,8 @@
 		BC7B969323BEC92200BFF472 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969223BEC92200BFF472 /* Chess.swift */; };
 		BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969423BEC97800BFF472 /* TemplateGame.swift */; };
 		BC7D47C023C75B9F00E92E0D /* MTLAllocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */; };
+		BC9C955223F1E9B900806C35 /* PawnWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BC9C955023F1E9B900806C35 /* PawnWhite.png */; };
+		BC9C955323F1E9B900806C35 /* PawnBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC9C955123F1E9B900806C35 /* PawnBlack.png */; };
 		BCAA9A5323B7144100DB3E34 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A5223B7144100DB3E34 /* AppDelegate.swift */; };
 		BCAA9A5523B7144100DB3E34 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BCAA9A5423B7144100DB3E34 /* ViewController.swift */; };
 		BCAA9A5723B7144500DB3E34 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = BCAA9A5623B7144500DB3E34 /* Assets.xcassets */; };
@@ -73,6 +84,15 @@
 		BC703F3923E0718D0098AE66 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		BC703F3C23E46A890098AE66 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicBuffer.swift; sourceTree = "<group>"; };
+		BC71BAAA23EC955B007AC994 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		BC72078D23F751A7004F6F1E /* KingBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KingBlack.png; sourceTree = "<group>"; };
+		BC72078F23FB219D004F6F1E /* KingWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KingWhite.png; sourceTree = "<group>"; };
+		BC72079123FB7975004F6F1E /* RookWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RookWhite.png; sourceTree = "<group>"; };
+		BC72079323FB7A13004F6F1E /* RookBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = RookBlack.png; sourceTree = "<group>"; };
+		BC72079523FB88F3004F6F1E /* BishopWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BishopWhite.png; sourceTree = "<group>"; };
+		BC72079623FB88F4004F6F1E /* BishopBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = BishopBlack.png; sourceTree = "<group>"; };
+		BC72079923FB9026004F6F1E /* KnightWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KnightWhite.png; sourceTree = "<group>"; };
+		BC72079B23FB90AD004F6F1E /* KnightBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KnightBlack.png; sourceTree = "<group>"; };
 		BC736A9423D1FCAE0016B2F2 /* Two.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Two.png; sourceTree = "<group>"; };
 		BC736A9623D1FFF90016B2F2 /* Four.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Four.png; sourceTree = "<group>"; };
 		BC736A9723D1FFF90016B2F2 /* Three.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Three.png; sourceTree = "<group>"; };
@@ -93,6 +113,8 @@
 		BC7B969223BEC92200BFF472 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
 		BC7B969423BEC97800BFF472 /* TemplateGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGame.swift; sourceTree = "<group>"; };
 		BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLAllocator.swift; sourceTree = "<group>"; };
+		BC9C955023F1E9B900806C35 /* PawnWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PawnWhite.png; sourceTree = "<group>"; };
+		BC9C955123F1E9B900806C35 /* PawnBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PawnBlack.png; sourceTree = "<group>"; };
 		BCAA9A4F23B7144100DB3E34 /* Engine.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Engine.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		BCAA9A5223B7144100DB3E34 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		BCAA9A5423B7144100DB3E34 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -198,6 +220,16 @@
 		BC736A8D23D0E2830016B2F2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BC72079B23FB90AD004F6F1E /* KnightBlack.png */,
+				BC72079923FB9026004F6F1E /* KnightWhite.png */,
+				BC72079623FB88F4004F6F1E /* BishopBlack.png */,
+				BC72079523FB88F3004F6F1E /* BishopWhite.png */,
+				BC72079323FB7A13004F6F1E /* RookBlack.png */,
+				BC72079123FB7975004F6F1E /* RookWhite.png */,
+				BC72078F23FB219D004F6F1E /* KingWhite.png */,
+				BC72078D23F751A7004F6F1E /* KingBlack.png */,
+				BC9C955023F1E9B900806C35 /* PawnWhite.png */,
+				BC9C955123F1E9B900806C35 /* PawnBlack.png */,
 				BC5520B123CFFACA007BD54B /* test.png */,
 				BC736AB023D21E3E0016B2F2 /* E.png */,
 				BC736AA323D21D850016B2F2 /* A.png */,
@@ -222,6 +254,7 @@
 		BCAA9A4623B7144100DB3E34 = {
 			isa = PBXGroup;
 			children = (
+				BC71BAAA23EC955B007AC994 /* README.md */,
 				BCAA9A5123B7144100DB3E34 /* Engine */,
 				BCAA9A6423B7144500DB3E34 /* EngineTests */,
 				BCAA9A6F23B7144500DB3E34 /* EngineUITests */,
@@ -376,7 +409,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				BC736AAB23D21D860016B2F2 /* D.png in Resources */,
+				BC72079A23FB9027004F6F1E /* KnightWhite.png in Resources */,
 				BC736AAE23D21D860016B2F2 /* B.png in Resources */,
+				BC71BAAB23EC955B007AC994 /* README.md in Resources */,
+				BC72079223FB7975004F6F1E /* RookWhite.png in Resources */,
 				BC5520B423D09347007BD54B /* One.png in Resources */,
 				BC736AA123D2030F0016B2F2 /* Six.png in Resources */,
 				BC736AAC23D21D860016B2F2 /* H.png in Resources */,
@@ -384,6 +420,11 @@
 				BC736AAA23D21D860016B2F2 /* A.png in Resources */,
 				BCAA9A5723B7144500DB3E34 /* Assets.xcassets in Resources */,
 				BC736A9F23D2030F0016B2F2 /* Eight.png in Resources */,
+				BC72079023FB219D004F6F1E /* KingWhite.png in Resources */,
+				BC72079823FB88F4004F6F1E /* BishopBlack.png in Resources */,
+				BC9C955223F1E9B900806C35 /* PawnWhite.png in Resources */,
+				BC72079723FB88F4004F6F1E /* BishopWhite.png in Resources */,
+				BC72078E23F751A7004F6F1E /* KingBlack.png in Resources */,
 				BC736A9823D1FFF90016B2F2 /* Four.png in Resources */,
 				BC736AA923D21D860016B2F2 /* F.png in Resources */,
 				BCAA9A5A23B7144500DB3E34 /* Main.storyboard in Resources */,
@@ -391,9 +432,12 @@
 				BC736A9E23D2030F0016B2F2 /* Seven.png in Resources */,
 				BC736AA023D2030F0016B2F2 /* Five.png in Resources */,
 				BC736AAF23D21D860016B2F2 /* G.png in Resources */,
+				BC72079C23FB90AD004F6F1E /* KnightBlack.png in Resources */,
 				BC736AB123D21E3E0016B2F2 /* E.png in Resources */,
 				BC736A9923D1FFF90016B2F2 /* Three.png in Resources */,
 				BC5520B223CFFACA007BD54B /* test.png in Resources */,
+				BC72079423FB7A13004F6F1E /* RookBlack.png in Resources */,
+				BC9C955323F1E9B900806C35 /* PawnBlack.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

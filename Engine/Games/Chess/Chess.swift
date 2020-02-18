@@ -41,7 +41,7 @@ class Chess: TemplateGame {
         guard let piece = board.getPiece(block) else {
             board.setNoneSelected()
             if(selectedID != -1) {
-                board.tryMovePiece(selectedID, block, false)
+                _ = board.tryMovePiece(selectedID, block, false)
                 selectedID = -1
             }
             return event
@@ -50,7 +50,7 @@ class Chess: TemplateGame {
             if(board.getPiece(selectedID)!.getColor() != piece.getColor()) {
                 board.setNoneSelected()
                 if(selectedID != -1) {
-                    board.tryMovePiece(selectedID, block, false)
+                    _ = board.tryMovePiece(selectedID, block, false)
                     selectedID = -1
                 }
                 return event
@@ -77,6 +77,11 @@ class Chess: TemplateGame {
                         p.addMagnitude(7)
                         p.addMagnitude(8)
                         p.setMoveVectors([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)])
+                        if(p.getColor() == Color.BLACK) {
+                            (p as! PieceImpl).setTextureName("blackqueen")
+                        }else {
+                            (p as! PieceImpl).setTextureName("whitequeen")
+                        }
                     }
                 }else {
                     if(board.getPieces()[i].getBoardPlace()[1] == 8) {
@@ -94,6 +99,17 @@ class Chess: TemplateGame {
                 }
             }
         }
+    
+        let bWin = board.hasWon(Color.BLACK)
+        let wWin = board.hasWon(Color.WHITE)
+        if(bWin) {
+            print("Black Wins")
+        }else if(wWin) {
+            print("White Wins")
+        }else if(wWin && bWin) {
+            print("How the hell does that even work")
+        }
+        
     }
 }
 

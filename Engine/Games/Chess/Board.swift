@@ -112,37 +112,83 @@ class Board {
     }
     
     func addRook(_ pos: SIMD2<Int>, _ color: Color) {
-        pieces.append(PieceImpl([SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "rook", color))
+        let piece = PieceImpl([SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "rook", color)
+        if(color == Color.BLACK) {
+            piece.setTextureName("blackrook")
+        }else {
+            piece.setTextureName("whiterook")
+        }
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
+        pieces.append(piece)
         ids = 1+ids
     }
     
     func addBishop(_ pos: SIMD2<Int>, _ color: Color) {
-        pieces.append(PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "bishop", color))
+        let piece = PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "bishop", color)
+        if(color == Color.BLACK) {
+            piece.setTextureName("blackbishop")
+        }else {
+            piece.setTextureName("whitebishop")
+        }
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
+        pieces.append(piece)
         ids = 1+ids
     }
     
     func addQueen(_ pos: SIMD2<Int>, _ color: Color) {
-        pieces.append(PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "queen", color))
+        let piece = PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "queen", color)
+        if(color == Color.BLACK) {
+            piece.setTextureName("blackking")
+        }else {
+            piece.setTextureName("whiteking")
+        }
+        pieces.append(piece)
         ids = 1+ids
     }
     
     func addKing(_ pos: SIMD2<Int>, _ color: Color) {
-        pieces.append(PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1], pos, false, scene, topRight, squareSize, ids, "king", color))
+        let piece = PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1], pos, false, scene, topRight, squareSize, ids, "king", color)
+        if(color == Color.BLACK) {
+            piece.setTextureName("blackking")
+        }else {
+            piece.setTextureName("whiteking")
+        }
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
+        pieces.append(piece)
         ids = 1+ids
     }
     
     func addKnight(_ pos: SIMD2<Int>, _ color: Color) {
-        pieces.append(PieceImpl([SIMD2<Int>(8, 8)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "knight", color))
+        let piece = PieceImpl([SIMD2<Int>(8, 8)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "knight", color)
+        if(color == Color.BLACK) {
+            piece.setTextureName("blackknight")
+        }else {
+            piece.setTextureName("whiteknight")
+        }
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
+        pieces.append(piece)
         ids = 1+ids
     }
     
     func addPawnW(_ pos: SIMD2<Int>) {
-        pieces.append(PieceImpl([SIMD2<Int>(0, 1)], [1, 2], pos, false, scene, topRight, squareSize, ids, "pawn", Color.WHITE))
+        let piece = PieceImpl([SIMD2<Int>(0, 1)], [1, 2], pos, false, scene, topRight, squareSize, ids, "pawn", Color.WHITE)
+        piece.setTextureName("whitepawn")
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
+        pieces.append(piece)
         ids = 1+ids
     }
     
     func addPawnB(_ pos: SIMD2<Int>) {
-        pieces.append(PieceImpl([SIMD2<Int>(0, -1)], [1, 2], pos, false, scene, topRight, squareSize, ids, "pawn", Color.BLACK))
+        let piece = PieceImpl([SIMD2<Int>(0, -1)], [1, 2], pos, false, scene, topRight, squareSize, ids, "pawn", Color.BLACK)
+        piece.setTextureName("blackpawn")
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
+        pieces.append(piece)
         ids = 1+ids
     }
     
@@ -257,13 +303,52 @@ class Board {
     
     func movePieceInternal(id: Int, place: SIMD2<Int>, magRev: Bool, _ mv: String, _ sim: Bool) -> Bool {
         let piece = pieces[id]
-        let magnitude = piece.getMagnitudes()
-        let vectors = piece.getMoveVectors()
+        let _ = piece.getMagnitudes()
+        let _ = piece.getMoveVectors()
         let pos = piece.getBoardPlace()
         
         var collideChecks = true
         
         if(mv == "knMV") {
+            //Check for kings
+            if(!sim) {
+                if(piece.getType() == "king") {
+                    if(isPieceInCheck(place, piece.getColor(), nil)) {
+                        return false
+                    }
+                }else{
+                    if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), nil)) {
+                        var ID = id
+                        var rem = false
+                        let formerPlace = piece.getBoardPlace()
+                        
+                        if(collideChecks) {
+                                if(!sim) {
+                                    if(getPiece(place) != nil) {
+                                        rem = true
+                                    }
+                                    piece.setBoardPlace(place: place)
+                                }
+                                pieces[ID] = piece
+                        }
+                        if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), place)) {
+                            piece.setBoardPlace(place: formerPlace)
+                            pieces[ID] = piece
+                            return false
+                        }
+                        if(magRev) {
+                            piece.removeMagnitude(2)
+                        }
+                        if(rem) {
+                            removePiece(getPiece(place)!.getID())
+                            ID = ID-1
+                            pieces[ID] = piece
+                        }
+                        return true
+                    }
+                }
+            }
+            
             if(!sim) {
                 if(getPiece(place) != nil){
                     removePiece(getPiece(place)!.getID())
@@ -278,6 +363,45 @@ class Board {
         
         if(mv == "pwMVD") {
             collideChecks = true
+            
+            //Check for kings
+            if(!sim) {
+                if(piece.getType() == "king") {
+                    if(isPieceInCheck(place, piece.getColor(), nil)) {
+                        return false
+                    }
+                }else{
+                    if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), nil)) {
+                        var ID = id
+                        var rem = false
+                        let formerPlace = piece.getBoardPlace()
+                        
+                        if(collideChecks) {
+                                if(!sim) {
+                                    if(getPiece(place) != nil) {
+                                        rem = true
+                                    }
+                                    piece.setBoardPlace(place: place)
+                                }
+                                pieces[ID] = piece
+                        }
+                        if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), place)) {
+                            piece.setBoardPlace(place: formerPlace)
+                            pieces[ID] = piece
+                            return false
+                        }
+                        if(magRev) {
+                            piece.removeMagnitude(2)
+                        }
+                        if(rem) {
+                            removePiece(getPiece(place)!.getID())
+                            ID = ID-1
+                            pieces[ID] = piece
+                        }
+                        return true
+                    }
+                }
+            }
             
             if(collideChecks) {
                 if(!sim) {
@@ -301,12 +425,10 @@ class Board {
                 for i in 0..<betweenX.count {
                     if(place[0]-pos[0] == place[1]-pos[1]) {
                         if(getPiece(SIMD2<Int>(betweenX[i], betweenY[i])) != nil) {
-                            print(SIMD2<Int>(betweenX[i], betweenY[i]))
                             collideChecks = false
                         }
                     }else {
                         if(getPiece(SIMD2<Int>(betweenX[i], betweenY[betweenY.count-1-i])) != nil) {
-                            print(SIMD2<Int>(betweenX[i], betweenY[i]))
                             collideChecks = false
                         }
                     }
@@ -342,7 +464,7 @@ class Board {
                 }
             }
             
-            //Check for kings (partial)
+            //Check for kings
             if(!sim) {
                 if(piece.getType() == "king") {
                     if(isPieceInCheck(place, piece.getColor(), nil)) {
@@ -352,7 +474,7 @@ class Board {
                     if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), nil)) {
                         var ID = id
                         var rem = false
-                        var formerPlace = piece.getBoardPlace()
+                        let formerPlace = piece.getBoardPlace()
                         
                         if(collideChecks) {
                                 if(!sim) {
@@ -398,6 +520,62 @@ class Board {
             }
         }
         pieces[id] = piece
+        return false
+    }
+    
+    func hasWon(_ c: Color) -> Bool {
+        var color: Color = Color.BLACK
+        
+        if(c == Color.BLACK) {
+            color = Color.WHITE
+        }
+        
+        let king = getKing(color)
+        let place = king.getBoardPlace()
+        
+        if(canKingMove(place: place, king: king)) {
+            return false
+        }
+        for i in pieces {
+            if(color == i.getColor()) {
+                for j in 0...8 {
+                    for k in 0...8 {
+                        let ID = i.getID()
+                        let formerPlace = i.getBoardPlace()
+                        
+                        if(tryMovePiece(ID, SIMD2<Int>(j, k), true)) {
+                                i.setBoardPlace(place: place)
+                                pieces[ID] = i
+                        }
+                        if(isPieceInCheck(getKing(i.getColor()).getBoardPlace(), i.getColor(), SIMD2<Int>(j, k))) {
+                            i.setBoardPlace(place: formerPlace)
+                            pieces[ID] = i
+                        }else {
+                            i.setBoardPlace(place: formerPlace)
+                            pieces[ID] = i
+                            return false
+                        }
+                    }
+                }
+            }
+        }
+        return true
+    }
+    
+    func canKingMove(place: SIMD2<Int>, king: Piece) -> Bool {
+        for i in -1...1 {
+            for j in -1...1 {
+                if(i != 0 || j != 0) {
+                    if(place[0]+i>8 || place[0]+i < 1) {
+                        if(place[1]+j>8 || place[1]+j < 1) {
+                            if(tryMovePiece(king.getID(), SIMD2<Int>(place[0]+i, place[1]+j), true)) {
+                                return true
+                            }
+                        }
+                    }
+                }
+            }
+        }
         return false
     }
     
