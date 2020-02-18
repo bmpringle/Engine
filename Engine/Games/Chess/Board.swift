@@ -140,10 +140,12 @@ class Board {
     func addQueen(_ pos: SIMD2<Int>, _ color: Color) {
         let piece = PieceImpl([SIMD2<Int>(-1, -1), SIMD2<Int>(-1, 1), SIMD2<Int>(1, -1), SIMD2<Int>(1, 1), SIMD2<Int>(0, 1), SIMD2<Int>(0, -1), SIMD2<Int>(1, 0), SIMD2<Int>(-1, 0)], [1, 2, 3, 4, 5, 6, 7, 8], pos, false, scene, topRight, squareSize, ids, "queen", color)
         if(color == Color.BLACK) {
-            piece.setTextureName("blackking")
+            piece.setTextureName("blackqueen")
         }else {
-            piece.setTextureName("whiteking")
+            piece.setTextureName("whitequeen")
         }
+        piece.texture_in_use = true
+        piece.fragment_function = "fragment_texture_shader"
         pieces.append(piece)
         ids = 1+ids
     }

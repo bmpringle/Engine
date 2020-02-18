@@ -13,6 +13,8 @@
 		BC703F3823E070F80098AE66 /* Piece.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3723E070F80098AE66 /* Piece.swift */; };
 		BC703F3A23E0718D0098AE66 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3923E0718D0098AE66 /* Board.swift */; };
 		BC703F3D23E46A890098AE66 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC703F3C23E46A890098AE66 /* Utilities.swift */; };
+		BC706F4623FC643F008BC844 /* QueenWhite.png in Resources */ = {isa = PBXBuildFile; fileRef = BC706F4423FC643F008BC844 /* QueenWhite.png */; };
+		BC706F4723FC643F008BC844 /* QueenBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC706F4523FC643F008BC844 /* QueenBlack.png */; };
 		BC71BAA923E9E8D9007AC994 /* LogicBuffer.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */; };
 		BC71BAAB23EC955B007AC994 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = BC71BAAA23EC955B007AC994 /* README.md */; };
 		BC72078E23F751A7004F6F1E /* KingBlack.png in Resources */ = {isa = PBXBuildFile; fileRef = BC72078D23F751A7004F6F1E /* KingBlack.png */; };
@@ -83,6 +85,8 @@
 		BC703F3723E070F80098AE66 /* Piece.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Piece.swift; sourceTree = "<group>"; };
 		BC703F3923E0718D0098AE66 /* Board.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		BC703F3C23E46A890098AE66 /* Utilities.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
+		BC706F4423FC643F008BC844 /* QueenWhite.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QueenWhite.png; sourceTree = "<group>"; };
+		BC706F4523FC643F008BC844 /* QueenBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = QueenBlack.png; sourceTree = "<group>"; };
 		BC71BAA823E9E8D9007AC994 /* LogicBuffer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LogicBuffer.swift; sourceTree = "<group>"; };
 		BC71BAAA23EC955B007AC994 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		BC72078D23F751A7004F6F1E /* KingBlack.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = KingBlack.png; sourceTree = "<group>"; };
@@ -220,6 +224,8 @@
 		BC736A8D23D0E2830016B2F2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BC706F4523FC643F008BC844 /* QueenBlack.png */,
+				BC706F4423FC643F008BC844 /* QueenWhite.png */,
 				BC72079B23FB90AD004F6F1E /* KnightBlack.png */,
 				BC72079923FB9026004F6F1E /* KnightWhite.png */,
 				BC72079623FB88F4004F6F1E /* BishopBlack.png */,
@@ -410,6 +416,7 @@
 			files = (
 				BC736AAB23D21D860016B2F2 /* D.png in Resources */,
 				BC72079A23FB9027004F6F1E /* KnightWhite.png in Resources */,
+				BC706F4623FC643F008BC844 /* QueenWhite.png in Resources */,
 				BC736AAE23D21D860016B2F2 /* B.png in Resources */,
 				BC71BAAB23EC955B007AC994 /* README.md in Resources */,
 				BC72079223FB7975004F6F1E /* RookWhite.png in Resources */,
@@ -435,6 +442,7 @@
 				BC72079C23FB90AD004F6F1E /* KnightBlack.png in Resources */,
 				BC736AB123D21E3E0016B2F2 /* E.png in Resources */,
 				BC736A9923D1FFF90016B2F2 /* Three.png in Resources */,
+				BC706F4723FC643F008BC844 /* QueenBlack.png in Resources */,
 				BC5520B223CFFACA007BD54B /* test.png in Resources */,
 				BC72079423FB7A13004F6F1E /* RookBlack.png in Resources */,
 				BC9C955323F1E9B900806C35 /* PawnBlack.png in Resources */,

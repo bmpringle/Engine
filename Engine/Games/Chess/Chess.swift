@@ -14,6 +14,7 @@ class Chess: TemplateGame {
     
     var board: Board = Board(8)
     var selectedID = -1
+    var move: Color = Color.WHITE
     
     override func fireLogic(viewController: ViewController) {
         updateScene(renderer: viewController.renderer)
@@ -41,7 +42,14 @@ class Chess: TemplateGame {
         guard let piece = board.getPiece(block) else {
             board.setNoneSelected()
             if(selectedID != -1) {
-                _ = board.tryMovePiece(selectedID, block, false)
+                let success = board.tryMovePiece(selectedID, block, false)
+                if(success) {
+                    if(move == Color.BLACK) {
+                        move = Color.WHITE
+                    }else {
+                        move = Color.BLACK
+                    }
+                }
                 selectedID = -1
             }
             return event
@@ -50,15 +58,24 @@ class Chess: TemplateGame {
             if(board.getPiece(selectedID)!.getColor() != piece.getColor()) {
                 board.setNoneSelected()
                 if(selectedID != -1) {
-                    _ = board.tryMovePiece(selectedID, block, false)
+                    let success = board.tryMovePiece(selectedID, block, false)
                     selectedID = -1
+                    if(success) {
+                        if(move == Color.BLACK) {
+                            move = Color.WHITE
+                        }else {
+                            move = Color.BLACK
+                        }
+                    }
                 }
                 return event
             }
         }
         
-        board.setSelected(piece)
-        selectedID = piece.getID()
+        if(piece.getColor() == move) {
+            board.setSelected(piece)
+            selectedID = piece.getID()
+        }
         return event
     }
     
