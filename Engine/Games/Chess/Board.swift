@@ -305,11 +305,17 @@ class Board {
     
     func movePieceInternal(id: Int, place: SIMD2<Int>, magRev: Bool, _ mv: String, _ sim: Bool) -> Bool {
         let piece = pieces[id]
-        let _ = piece.getMagnitudes()
+        let magnitudes = piece.getMagnitudes()
         let _ = piece.getMoveVectors()
         let pos = piece.getBoardPlace()
         
         var collideChecks = true
+        
+        if(magRev) {
+            if(getPiece(place) != nil) {
+                return false
+            }
+        }
         
         if(mv == "knMV") {
             //Check for kings
@@ -512,6 +518,7 @@ class Board {
                                 pieces[ID] = piece
                         }
                         if(isPieceInCheck(getKing(piece.getColor()).getBoardPlace(), piece.getColor(), place)) {
+                             print("c")
                             piece.setBoardPlace(place: formerPlace)
                             pieces[ID] = piece
                             return false
@@ -527,6 +534,7 @@ class Board {
                             removePiece(getPiece(place)!.getID())
                             piece.setID(id: ID)
                             pieces[ID] = piece
+                             print("b")
                         }
                         return true
                     }
@@ -629,8 +637,11 @@ class Board {
             if((exclude != nil) && (exclude! == i.getBoardPlace())) {
                 
             }else {
+                print("b")
                 if(i.getType() != "king" && i.getColor() != color) {
+                    print("h")
                     if(tryMovePiece(i.getID(), piece, true)) {
+                        print("a")
                         if(i.getType() == "pawn") {
                             return false
                         }
@@ -644,7 +655,11 @@ class Board {
                                     }
                                 }
                             }else {
-                                
+                                if(piece[1] == i.getBoardPlace()[1]+1) {
+                                    if(piece[0] == i.getBoardPlace()[0]-1 || piece[0] == i.getBoardPlace()[0]+1) {
+                                        return true
+                                    }
+                                }
                             }
                         }
                     }

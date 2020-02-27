@@ -102,7 +102,7 @@ class Chess: TemplateGame {
             }
         }
     
-        let bWin = board.hasWon(Color.BLACK)
+       /* let bWin = board.hasWon(Color.BLACK)
         let wWin = board.hasWon(Color.WHITE)
         if(bWin) {
             print("Black Wins")
@@ -110,7 +110,7 @@ class Chess: TemplateGame {
             print("White Wins")
         }else if(wWin && bWin) {
             print("How the hell does that even work")
-        }
+        }*/
         
     }
 }
