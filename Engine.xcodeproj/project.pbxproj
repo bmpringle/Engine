@@ -41,6 +41,7 @@
 		BC736AAF23D21D860016B2F2 /* G.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736AA823D21D860016B2F2 /* G.png */; };
 		BC736AB123D21E3E0016B2F2 /* E.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736AB023D21E3E0016B2F2 /* E.png */; };
 		BC74B93323B9AEF90019AFA4 /* OpenWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */; };
+		BC74C89B2408530100422B2F /* EngineNetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74C89A2408530100422B2F /* EngineNetworkHandler.swift */; };
 		BC7950BE23C144E500AC937C /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7950BD23C144E500AC937C /* Line.swift */; };
 		BC7B969323BEC92200BFF472 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969223BEC92200BFF472 /* Chess.swift */; };
 		BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969423BEC97800BFF472 /* TemplateGame.swift */; };
@@ -113,6 +114,7 @@
 		BC736AA823D21D860016B2F2 /* G.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = G.png; sourceTree = "<group>"; };
 		BC736AB023D21E3E0016B2F2 /* E.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E.png; sourceTree = "<group>"; };
 		BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWorld.swift; sourceTree = "<group>"; };
+		BC74C89A2408530100422B2F /* EngineNetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EngineNetworkHandler.swift; sourceTree = "<group>"; };
 		BC7950BD23C144E500AC937C /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
 		BC7B969223BEC92200BFF472 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
 		BC7B969423BEC97800BFF472 /* TemplateGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGame.swift; sourceTree = "<group>"; };
@@ -189,6 +191,7 @@
 				BC7950BD23C144E500AC937C /* Line.swift */,
 				BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */,
 				BC703F3C23E46A890098AE66 /* Utilities.swift */,
+				BC74C89A2408530100422B2F /* EngineNetworkHandler.swift */,
 			);
 			path = Engine_Internal;
 			sourceTree = "<group>";
@@ -477,6 +480,7 @@
 				BC71BAA923E9E8D9007AC994 /* LogicBuffer.swift in Sources */,
 				BC7D47C023C75B9F00E92E0D /* MTLAllocator.swift in Sources */,
 				BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */,
+				BC74C89B2408530100422B2F /* EngineNetworkHandler.swift in Sources */,
 				BCAA9A8323B7FAC700DB3E34 /* StructDef.swift in Sources */,
 				BCB050D523BA892A008BBD90 /* CPattern.swift in Sources */,
 				BCAA9A8123B71E9500DB3E34 /* Shaders.metal in Sources */,

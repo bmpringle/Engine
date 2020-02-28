@@ -32,6 +32,10 @@ class TemplateGame {
        }
     }
     
+    func dataSent() {
+        
+    }
+    
     func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
         return event
     }

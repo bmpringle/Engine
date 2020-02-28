@@ -63,7 +63,7 @@ class CPattern {
                         num.texture_in_use = true
                         num.setTextureName("\(i+1)")
                         num.scale(tLength/4)
-                        num.move(xyz: SIMD3<Float>(-tLength, -tLength/8, 0))
+                        num.move(xyz: SIMD3<Float>(-tLength/1.2, -tLength/8, 0))
                         tile.addChild(num)
                     }
                     if(j == xTiles-1) {
@@ -72,7 +72,7 @@ class CPattern {
                         num.texture_in_use = true
                         num.setTextureName("\(i+1)")
                         num.scale(tLength/4)
-                        num.move(xyz: SIMD3<Float>(tLength, -tLength/8, 0))
+                        num.move(xyz: SIMD3<Float>(tLength/1.7, -tLength/8, 0))
                         tile.addChild(num)
                     }
                     if(i == 0) {

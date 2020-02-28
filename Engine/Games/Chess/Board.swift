@@ -15,6 +15,8 @@ class Board {
     var scene: Scene
     var pieces: [Piece]
     var ids = 0
+    var black_death_que = SIMD2<Int>(9, 9)
+    var white_death_que = SIMD2<Int>(0, 9)
     
     init(_ squareSize: Float) {
         self.squareSize = squareSize
@@ -83,9 +85,33 @@ class Board {
         return nil
     }
     
+    func advanceDeathQue(_ color: Color) {
+        if(color == Color.BLACK) {
+            if(black_death_que[0] == 9) {
+                black_death_que[0] = 10
+            }else{
+                black_death_que[0] = 9
+                black_death_que[1] = black_death_que[1]-1
+            }
+        }else {
+            if(white_death_que[0] == 0) {
+                white_death_que[0] = -1
+            }else{
+                white_death_que[0] = 0
+                white_death_que[1] = black_death_que[1]-1
+            }
+        }
+    }
+    
     func removePiece(_ ID: Int) {
         let n = pieces[ID]
-        n.delete()
+        if(n.getColor() == Color.BLACK) {
+            n.setBoardPlace(place: black_death_que)
+        }else {
+            n.setBoardPlace(place: white_death_que)
+        }
+        advanceDeathQue(n.getColor())
+        //n.delete()
         pieces[ID] = n
         
         self.pieces.remove(at: ID)
