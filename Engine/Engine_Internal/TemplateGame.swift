@@ -12,6 +12,7 @@ import MetalKit
 
 class TemplateGame {
     var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
+    var name = "game"
     
     //set in ViewController.viewDidLoad before anything else, no need to change
     var aspectRatio: Float = 16/10
@@ -32,8 +33,8 @@ class TemplateGame {
        }
     }
     
-    func dataSent() {
-        
+    func dataRecieved(data: Data) {
+        print("recieved \(data)")
     }
     
     func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {

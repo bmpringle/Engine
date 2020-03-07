@@ -14,21 +14,22 @@ import Metal
 typealias Game = Chess
 
 class ViewController: NSViewController {
+        
     var mtkView: MTKView {
         return view as! MTKView
     }
     
     var renderer: Renderer!
-    var game = Game()
+    static var game = Game()
     
     @objc func fireLogic() {
-        game.fireLogic(viewController: self)
+        ViewController.game.fireLogic(viewController: self)
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        game.aspectRatio = Float(view.bounds.width/view.bounds.height)
+        ViewController.game.aspectRatio = Float(view.bounds.width/view.bounds.height)
         
         mtkView.device = MTLCreateSystemDefaultDevice()
         mtkView.sampleCount = 8
@@ -36,7 +37,7 @@ class ViewController: NSViewController {
         mtkView.depthStencilPixelFormat = .depth32Float
         
         //Create render class
-        renderer = Renderer(mtkView: mtkView, Game: game)
+        renderer = Renderer(mtkView: mtkView, Game: ViewController.game)
         
         mtkView.delegate = renderer!
         
@@ -45,7 +46,7 @@ class ViewController: NSViewController {
         NSEvent.addLocalMonitorForEvents(matching: .keyDown) {
             guard let locWindow = self.view.window,
             NSApplication.shared.keyWindow === locWindow else { return $0 }
-            if self.game.keyHandler(with: $0, viewController: self) {
+            if ViewController.self.game.keyHandler(with: $0, viewController: self) {
               return nil
            } else {
               return $0
@@ -53,7 +54,14 @@ class ViewController: NSViewController {
         }
         
         NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
-            return self.game.mouseHandler(with: event, viewController: self)
+            return ViewController.self.game.mouseHandler(with: event, viewController: self)
         }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(exiting), name: NSApplication.willTerminateNotification, object: nil)
+    }
+    
+    @objc func exiting() {
+        renderer.netHandler.stopHosting()
+        renderer.netHandler.disconnectAll()
     }
 }

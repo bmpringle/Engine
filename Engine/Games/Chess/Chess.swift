@@ -16,25 +16,73 @@ class Chess: TemplateGame {
     var selectedID = -1
     var move: Color = Color.WHITE
     
+    override init() {
+        super.init()
+        name = "chess"
+    }
+    
     override func fireLogic(viewController: ViewController) {
         updateScene(renderer: viewController.renderer)
+        viewController.renderer.netHandler.startHosting()
     }
     
     override func createScene() -> Scene {
         return board.getScene()
     }
     
+    override func dataRecieved(data: Data) {
+        let stringData = String(data: data, encoding: .utf8)
+        let strings = stringData?.split(separator: "|")
+        let block = SIMD2<Int>(Int(String(strings![1]))!, Int(String(strings![2]))!)
+        let id = Int(String(strings![0]))!
+        selectedID = id
+        board.setNoneSelected()
+        let success = board.tryMovePiece(selectedID, block, false)
+       if(success) {
+           if(move == Color.BLACK) {
+               move = Color.WHITE
+           }else {
+               move = Color.BLACK
+           }
+       }
+       selectedID = -1
+        return
+    }
+    
     override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
-       case 13:
-        board.pieces.remove(at: board.pieces.count-1)
-        return true
+        case 13:
+            viewController.renderer.netHandler.delegate.sendTest()
+            return true
+       case 46:
+            
+            let alert = NSAlert()
+            alert.messageText = "Networking"
+            alert.informativeText = "Enter the hostname of the opponent you want to connnect to:"
+            alert.addButton(withTitle: "Done")
+            let textfield = NSTextField(frame: NSRect(x: 0.0, y: 0.0, width: 80.0, height: 24.0))
+            textfield.alignment = .center
+            alert.accessoryView = textfield
+            var hostname = ""
+            let _ = alert.runModal()
+                
+            if(textfield.accessibilityValue()! != "") {
+                hostname = textfield.accessibilityValue()!
+            }else{
+                return keyHandler(with: event, viewController: viewController)
+            }
+            
+            viewController.renderer.netHandler.finder.startFinding(name: hostname)
+            return true
         default:
-                print(event.keyCode)
-                return false
+            print(event.keyCode)
+            return false
        }
     }
-
+    func sendDataToPeers(data: String, viewController: ViewController) {
+        viewController.renderer.netHandler.delegate.sendToAll(data: data)
+    }
+    
     override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
         var loc = SIMD2<Float>(Float(event.locationInWindow.x/viewController.view.bounds.size.width), Float(event.locationInWindow.y/viewController.view.bounds.size.height))
         loc = (loc*200)-100
@@ -44,6 +92,7 @@ class Chess: TemplateGame {
             if(selectedID != -1) {
                 let success = board.tryMovePiece(selectedID, block, false)
                 if(success) {
+                    sendDataToPeers(data: "\(selectedID)|\(block[0])|\(block[1])", viewController: viewController)
                     if(move == Color.BLACK) {
                         move = Color.WHITE
                     }else {
@@ -59,14 +108,15 @@ class Chess: TemplateGame {
                 board.setNoneSelected()
                 if(selectedID != -1) {
                     let success = board.tryMovePiece(selectedID, block, false)
-                    selectedID = -1
                     if(success) {
+                        sendDataToPeers(data: "\(selectedID)|\(block[0])|\(block[1])", viewController: viewController)
                         if(move == Color.BLACK) {
                             move = Color.WHITE
                         }else {
                             move = Color.BLACK
                         }
                     }
+                    selectedID = -1
                 }
                 return event
             }

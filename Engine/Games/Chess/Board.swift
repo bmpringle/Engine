@@ -98,7 +98,7 @@ class Board {
                 white_death_que[0] = -1
             }else{
                 white_death_que[0] = 0
-                white_death_que[1] = black_death_que[1]-1
+                white_death_que[1] = white_death_que[1]-1
             }
         }
     }
