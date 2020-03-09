@@ -60,6 +60,22 @@ public class Node {
         return xyz
     }
     
+    func scaleX(_ f: Float) {
+        var verticesNew: [PosAndColor] = [PosAndColor]()
+        for i in vertices! {
+            verticesNew.append(PosAndColor(pos: SIMD4<Float>(i.pos[0]*f, i.pos[1], i.pos[2], i.pos[3]), color: i.color))
+        }
+        vertices = verticesNew
+    }
+    
+    func scaleY(_ f: Float) {
+        var verticesNew: [PosAndColor] = [PosAndColor]()
+        for i in vertices! {
+            verticesNew.append(PosAndColor(pos: SIMD4<Float>(i.pos[0], i.pos[1]*f, i.pos[2], i.pos[3]), color: i.color))
+        }
+        vertices = verticesNew
+    }
+    
     func move(xyz: SIMD3<Float>) {
         self.xyz = self.xyz+xyz
         for i in 0..<children.count {
@@ -71,33 +87,46 @@ public class Node {
         texture_name = name
     }
     
-    func createTexture() -> MTLTexture{
+    func createTextureManually() -> MTLTexture {
+         let nsimage = NSImage(named: NSImage.Name(texture_name))
+        
+         let image = nsimage?.cgImage(forProposedRect: nil, context: nil, hints: nil)
+         
+         let desc = MTLTextureDescriptor()
+         desc.pixelFormat = .bgra8Unorm_srgb
+         desc.width = image!.width
+         desc.height = image!.height
+         
+         let texture: MTLTexture? = root_node.allocator?.getTexture(descriptor: desc)
+         
+         let reigon: MTLRegion = MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: image!.width, height: image!.height, depth: 1))
+         
+         let nsdata: NSMutableData = NSMutableData(data: (nsimage?.tiffRepresentation)!)
+         let nsdatacopy: NSMutableData = nsdata.mutableCopy() as! NSMutableData
+         
+         let bytesPerRow = image!.bytesPerRow
+         let rows = image?.height
+         
+         print(rows!)
+         print(bytesPerRow)
+         print(nsdata.length)
+         print(nsdatacopy.length)
+         for i in 0..<rows! {
+             print(i)
+             let bytes = NSData(data: nsdata.subdata(with: NSRange(location: i*bytesPerRow, length: bytesPerRow))).bytes
+             nsdatacopy.replaceBytes(in: NSRange(location: rows!*bytesPerRow-(i*bytesPerRow)-bytesPerRow, length: bytesPerRow), withBytes: bytes)
+         }
+         
+         texture?.replace(region: reigon, mipmapLevel: 0, withBytes: nsdata.bytes, bytesPerRow: image!.bytesPerRow)
+         return texture!
+    }
+    
+    func createTexture() -> MTLTexture {
         let nsimage = NSImage(named: NSImage.Name(texture_name))
-       
         let image = nsimage?.cgImage(forProposedRect: nil, context: nil, hints: nil)
         
-        let desc = MTLTextureDescriptor()
-        desc.pixelFormat = .bgra8Unorm_srgb
-        desc.width = image!.width
-        desc.height = image!.height
-        
-        let texture: MTLTexture? = root_node.allocator?.getTexture(descriptor: desc)
-        
-        let reigon: MTLRegion = MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: image!.width, height: image!.height, depth: 1))
-        
-        let nsdata: NSMutableData = NSMutableData(data: (nsimage?.tiffRepresentation)!)
-        let nsdatacopy: NSMutableData = nsdata.mutableCopy() as! NSMutableData
-        
-        let bytesPerRow = image!.bytesPerRow
-        let rows = image?.height
-        
-        for i in 0..<rows! {
-            nsdatacopy.replaceBytes(in: NSRange(location: rows!*bytesPerRow-(i*bytesPerRow)-bytesPerRow, length: bytesPerRow), withBytes: NSData(data: nsdata.subdata(with: NSRange(location: i*bytesPerRow, length: bytesPerRow))).bytes)
-        }
-        
-        texture?.replace(region: reigon, mipmapLevel: 0, withBytes: nsdatacopy.bytes, bytesPerRow: image!.bytesPerRow)
-    
-        return texture!
+        let textureloader = MTKTextureLoader(device: (root_node.allocator?.getDevice())!)
+        return try! textureloader.newTexture(cgImage: image!, options: [MTKTextureLoader.Option.origin:MTKTextureLoader.Origin.bottomLeft])
     }
     
     func setRootNode(_ r: Node) {
@@ -155,6 +184,16 @@ public class Node {
         root_node = root
     }
     
+    init(vertices: [PosAndColor]?, children: [Node]?) {
+        self.vertices = vertices
+        if(children != nil) {
+            for i in 0..<children!.count {
+                self.children.append(children![i])
+            }
+        }
+        root_node = nil
+    }
+    
     init() {
         self.vertices = nil
         self.root_node = nil
@@ -164,7 +203,7 @@ public class Node {
         children.append(child)
     }
 
-    private func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
+    func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
         var worldVertices: [PosAndColorTexture] = []
         
         for i in 0..<vertices!.count {

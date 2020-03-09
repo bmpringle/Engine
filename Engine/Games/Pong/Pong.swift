@@ -21,6 +21,10 @@ class Pong: TemplateGame {
         name = "pong"
     }
     
+    override func defGame() -> TemplateGame {
+        return Pong()
+    }
+    
     override func fireLogic(viewController: ViewController) {
         if(gameOver || !gameStart) {
             
@@ -97,12 +101,13 @@ class Pong: TemplateGame {
     }
     
     private var speed: Float = 1/10
-    private var angle = SIMD2<Float>(Float(Int.random(in: 1 ... 10)), Float(Int.random(in: 1 ... 10)))
+    private var angle = SIMD2<Float>(Float(Float.random(in: 1 ... 5)), Float(Float.random(in: 1 ... 5)))
     public var gameStart = false
     public var gameOver = false
 
     override func updateScene(renderer: Renderer) {
-        
+        print(speed)
+        print(renderer.scene.getRootNode().children[2].getXYZ())
         //Move Ball
         renderer.scene.getRootNode().children[2].move(xyz: SIMD3<Float>(angle[0]*speed, angle[1]*speed, 0))
         

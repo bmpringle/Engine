@@ -21,6 +21,10 @@ class Chess: TemplateGame {
         name = "chess"
     }
     
+    override func defGame() -> TemplateGame {
+        return Chess()
+    }
+    
     override func fireLogic(viewController: ViewController) {
         updateScene(renderer: viewController.renderer)
         viewController.renderer.netHandler.startHosting()
@@ -54,7 +58,7 @@ class Chess: TemplateGame {
         case 13:
             viewController.renderer.netHandler.delegate.sendTest()
             return true
-       case 46:
+       case 45:
             
             let alert = NSAlert()
             alert.messageText = "Networking"

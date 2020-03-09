@@ -26,7 +26,7 @@ class Renderer: NSObject, MTKViewDelegate {
         device = mtkView.device
         commandQueue = device.makeCommandQueue()
         scene = game.createScene()
-        netHandler = NetworkHandler(serviceName: game.name)
+        netHandler = NetworkHandler(serviceName: game.name, game: game as! TemplateGame)
         
         do {
            pipelineState = try buildRenderPipelineWith(device: device, metalKitView: mtkView)

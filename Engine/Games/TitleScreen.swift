@@ -1,19 +1,21 @@
 //
-//  OpenWorld.swift
+//  TitleScreen.swift
 //  Engine
 //
-//  Created by Benjamin M. Pringle on 12/29/19.
-//  Copyright © 2019 Benjamin M. Pringle. All rights reserved.
+//  Created by Benjamin M. Pringle on 3/7/20.
+//  Copyright © 2020 Benjamin M. Pringle. All rights reserved.
 //
+
+import Foundation
 
 import Foundation
 import Metal
 import MetalKit
 
-class OpenWorld: TemplateGame {
+class TitleScreen: TemplateGame {
     
     override func fireLogic(viewController: ViewController) {
-
+        
     }
     
     override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
@@ -22,26 +24,28 @@ class OpenWorld: TemplateGame {
     
     override func createScene() -> Scene {
         let scene = Scene()
-        let room = CPattern(3)
-        let rNode1 = room.createBoard(xTiles: 4, yTiles: 9, false, scene: scene)
-        scene.addChild(rNode1)
+        let title = Node(vertices: Renderer.genericbox, children: nil, scene.getRootNode())
+        title.fragment_function = "fragment_texture_shader"
+        title.texture_in_use = true
+        title.setTextureName("Title")
+        title.move(xyz: SIMD3<Float>(-1/2, -1/2, 0))
+        title.scale(100)
+        scene.addChild(title)
         return scene
     }
 
     override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
+            case 36:
+                viewController.swapGame(game: SelectionScreen())
+                return true
             default:
                 print(event.keyCode)
                 return false
        }
     }
-    
-    override func defGame() -> TemplateGame {
-        return OpenWorld()
-    }
-    
+
     override func updateScene(renderer: Renderer) {
 
     }
 }
-

@@ -16,8 +16,8 @@ class NetworkHandler {
     var connections: [String] = [String]()
     static var peerID = MCPeerID(displayName: Host.current().name!)
     
-    init(serviceName: String) {
-        self.delegate = NetworkDelegate(serviceName: serviceName)
+    init(serviceName: String, game: TemplateGame) {
+        self.delegate = NetworkDelegate(serviceName: serviceName, game: game)
         self.advertizer = NetworkAdvertizer(serviceName: serviceName, delegate: delegate)
         self.finder = NetworkFinder(serviceName: serviceName, delegate: delegate)
     }
@@ -49,10 +49,12 @@ class NetworkHandler {
 class NetworkDelegate: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServiceBrowserDelegate, MCSessionDelegate {
     var session: NetworkSession!
     var lookingFor = "all"
+    var game: TemplateGame!
     
-    init(serviceName: String) {
+    init(serviceName: String, game: TemplateGame) {
         super.init()
         self.session = NetworkSession(serviceName: serviceName, delegate: self)
+        self.game = game
     }
 
     func peerCount() -> Int {
@@ -110,7 +112,7 @@ class NetworkDelegate: NSObject, MCNearbyServiceAdvertiserDelegate, MCNearbyServ
 
     func session(_ session: MCSession, didReceive data: Data, fromPeer peerID: MCPeerID) {
         NSLog("%@", "didReceiveData: \(data)")
-        ViewController.game.dataRecieved(data: data)
+        game.dataRecieved(data: data)
     }
 
     func session(_ session: MCSession, didReceive stream: InputStream, withName streamName: String, fromPeer peerID: MCPeerID) {

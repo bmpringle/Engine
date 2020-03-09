@@ -14,7 +14,7 @@ class TemplateGame {
     var constants = Constants(bounds: SIMD4<Float>(100, 100, 100, 1))
     var name = "game"
     
-    //set in ViewController.viewDidLoad before anything else, no need to change
+    //set in  ViewController.viewDidLoad before anything else, no need to change
     var aspectRatio: Float = 16/10
     
     func fireLogic(viewController: ViewController) {
@@ -24,7 +24,11 @@ class TemplateGame {
     func createScene() -> Scene {
         return Scene()
     }
-
+    
+    func defGame() -> TemplateGame {
+        return TemplateGame()
+    }
+    
     func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
             default:
