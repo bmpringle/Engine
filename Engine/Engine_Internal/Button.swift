@@ -11,82 +11,48 @@ import Metal
 import MetalKit
 
 class Button: Node {
-    var length: Float = 1
-    var width: Float = 1
-    var x: Float = 1
-    var y: Float = 1
-    var state = 0
-    //0 is not pressed, 1 is pressed
-    var texture_unpressed = ""
-    var texture_pressed = ""
-    var monitor: Any!
     
-    init(children: [Node]?, _ root: Node) {
+    let state: ButtonState
+    
+    init(children: [Node]?, _ root: Node, state: ButtonState) {
+        self.state = state
         super.init(vertices: Renderer.genericbox, children: children, root)
-        monitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
-            return self.handleMouseDown(with: event)
-        }
-    }
-    
-    init(children: [Node]?) {
-        super.init(vertices: Renderer.genericbox, children: children)
-        monitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
-            return self.handleMouseDown(with: event)
-        }
-    }
-    
-    deinit {
-        NSEvent.removeMonitor(monitor!)
-    }
-    
-    @objc func resetstate() {
-        state = 0
-    }
-    
-    func handleMouseDown(with event: NSEvent) -> NSEvent {
-        var location = SIMD2<Float>(Float(event.locationInWindow.x/(event.window?.contentView?.bounds.size.width)!), Float(event.locationInWindow.y/(event.window?.contentView?.bounds.size.height)!))
-        location = (location*200)-100
-        if(location[0] >= x && location[0] <= x+length) {
-            if(location[1] >= y && location[1] <= y+width) {
-                print("Clicked!")
-                state = 1
-                Timer.scheduledTimer(timeInterval: 1/2, target: self, selector: #selector(resetstate), userInfo: nil, repeats: false)
-                return event
-            }
-        }
-        state = 0
-        return event
-    }
-    
-    func setWidth(_ width: Float) {
-        self.width = width
-    }
-    
-    func setLength(_ length: Float) {
-        self.length = length
-    }
-    
-    func setX(_ x: Float) {
-        self.x = x
-        self.xyz = SIMD3<Float>(x, self.xyz[1], self.xyz[2])
-    }
-    
-    func setY(_ y: Float) {
-        self.y = y
-        self.xyz = SIMD3<Float>(self.xyz[0], y, self.xyz[2])
     }
     
     override func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
         
-        if(state == 0) {
+        xyz = SIMD3<Float>(state.x, state.y, xyz[2])
+        scalar = state.scalar
+        
+        if(state.overlayName != "") {
+            if(children.count == 0) {
+                let overlay = Node(vertices: Renderer.genericbox, children: nil, self.root_node)
+                overlay.scalar = state.scalar*80/100
+                overlay.xyz = SIMD3<Float>(state.x+abs(0.03125*state.x+1), state.y+abs(0.03125*state.y), xyz[2])
+                overlay.texture_in_use = true
+                overlay.fragment_function = state.fragment_function
+                overlay.texture_name = state.overlayName
+                print("added Overlay")
+                print(NSImage(named: NSImage.Name("Test")) != nil)
+                addChild(overlay)
+            }
+        }
+        
+        if(state.fragment_function != "") {
+            fragment_function = state.fragment_function
+        }
+        
+        texture_in_use = state.texture_in_use
+        
+        if(state.pressed == 0) {
             if(texture_in_use) {
-                texture_name = texture_unpressed
+                texture_name = state.texture_unpressed
             }else {
                 texture_name = "Test"
             }
         }else {
             if(texture_in_use) {
-                texture_name = texture_pressed
+                texture_name = state.texture_pressed
             }else {
                 texture_name = "Test"
             }

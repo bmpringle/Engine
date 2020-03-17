@@ -14,12 +14,20 @@ import MetalKit
 
 class SelectionScreen: TemplateGame {
     
-    var swapToChess = false
+    var swapTo: TemplateGame.Type? = nil
     
     override func fireLogic(viewController: ViewController) {
         viewController.menuGame = self
-        if(swapToChess) {
-            viewController.swapGame(game: Chess())
+        for i in (viewController.renderer.scene.getRootNode().children as! [Button]) {
+            if(i.state.pressed == 1) {
+                swapTo = i.state.action as! TemplateGame.Type? ?? nil
+            }else {
+                if(swapTo != nil && i.state.action == swapTo) {
+                    let to = swapTo
+                    swapTo = nil
+                    viewController.swapGame(game: to!.init())
+                }
+            }
         }
     }
     
@@ -27,22 +35,42 @@ class SelectionScreen: TemplateGame {
         return event
     }
     
+    func chessButton(scene: Scene) -> Button {
+        let state = ButtonState()
+        state.scale(20)
+        state.setX(-15)
+        state.setY(25)
+        state.setLength(30)
+        state.setWidth(20)
+        state.texture_in_use = true
+        state.fragment_function = "fragment_texture_shader"
+        state.texture_pressed = "ButtonPressed"
+        state.texture_unpressed = "ButtonUnpressed"
+        state.addOverlay("ChessText")
+        state.action = Chess.self
+        return Button(children: nil, scene.getRootNode(), state: state)
+    }
+    
+    func pongButton(scene: Scene) -> Button {
+        let state = ButtonState()
+        state.scale(20)
+        state.setX(-15)
+        state.setY(-25)
+        state.setLength(30)
+        state.setWidth(20)
+        state.texture_in_use = true
+        state.fragment_function = "fragment_texture_shader"
+        state.texture_pressed = "ButtonPressed"
+        state.texture_unpressed = "ButtonUnpressed"
+        state.addOverlay("PongText")
+        state.action = Pong.self
+        return Button(children: nil, scene.getRootNode(), state: state)
+    }
+    
     override func createScene() -> Scene {
         let scene = Scene()
-        let button1 = Button(children: nil, scene.getRootNode())
-        button1.scale(20)
-        button1.setX(-60)
-        button1.setY(60)
-        button1.setLength(30)
-        button1.setWidth(20)
-        button1.texture_in_use = true
-        button1.fragment_function = "fragment_texture_shader"
-        button1.texture_pressed = "ButtonPressedChess"
-        button1.texture_unpressed = "ButtonUnpressedChess"
-        scene.addChild(button1)
-        if(button1.state == 1) {
-            swapToChess = true
-        }
+        scene.addChild(chessButton(scene: scene))
+        scene.addChild(pongButton(scene: scene))
         return scene
     }
 

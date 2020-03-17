@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		BC0CC48A2421540C00B3A9A3 /* ChessText.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0CC4892421540C00B3A9A3 /* ChessText.png */; };
+		BC0CC48C242157AD00B3A9A3 /* PongText.png in Resources */ = {isa = PBXBuildFile; fileRef = BC0CC48B242157AD00B3A9A3 /* PongText.png */; };
 		BC1C2AB523B924E4000192BA /* Pong.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC1C2AB423B924E4000192BA /* Pong.swift */; };
 		BC471CCC241400A1005E65FB /* NetworkFinder.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC471CCB241400A1005E65FB /* NetworkFinder.swift */; };
 		BC471CD0241400CC005E65FB /* NetworkHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC471CCF241400CC005E65FB /* NetworkHandler.swift */; };
@@ -51,6 +53,7 @@
 		BC736AB123D21E3E0016B2F2 /* E.png in Resources */ = {isa = PBXBuildFile; fileRef = BC736AB023D21E3E0016B2F2 /* E.png */; };
 		BC74B93323B9AEF90019AFA4 /* OpenWorld.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */; };
 		BC7950BE23C144E500AC937C /* Line.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7950BD23C144E500AC937C /* Line.swift */; };
+		BC7979E9241C00FB008765D4 /* ButtonState.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7979E8241C00FB008765D4 /* ButtonState.swift */; };
 		BC7B969323BEC92200BFF472 /* Chess.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969223BEC92200BFF472 /* Chess.swift */; };
 		BC7B969523BEC97800BFF472 /* TemplateGame.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7B969423BEC97800BFF472 /* TemplateGame.swift */; };
 		BC7D47C023C75B9F00E92E0D /* MTLAllocator.swift in Sources */ = {isa = PBXBuildFile; fileRef = BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */; };
@@ -89,6 +92,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		BC0CC4892421540C00B3A9A3 /* ChessText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ChessText.png; sourceTree = "<group>"; };
+		BC0CC48B242157AD00B3A9A3 /* PongText.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = PongText.png; sourceTree = "<group>"; };
 		BC1C2AB423B924E4000192BA /* Pong.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Pong.swift; sourceTree = "<group>"; };
 		BC471CCB241400A1005E65FB /* NetworkFinder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkFinder.swift; sourceTree = "<group>"; };
 		BC471CCF241400CC005E65FB /* NetworkHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkHandler.swift; sourceTree = "<group>"; };
@@ -133,6 +138,7 @@
 		BC736AB023D21E3E0016B2F2 /* E.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = E.png; sourceTree = "<group>"; };
 		BC74B93223B9AEF90019AFA4 /* OpenWorld.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OpenWorld.swift; sourceTree = "<group>"; };
 		BC7950BD23C144E500AC937C /* Line.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Line.swift; sourceTree = "<group>"; };
+		BC7979E8241C00FB008765D4 /* ButtonState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonState.swift; sourceTree = "<group>"; };
 		BC7B969223BEC92200BFF472 /* Chess.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Chess.swift; sourceTree = "<group>"; };
 		BC7B969423BEC97800BFF472 /* TemplateGame.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemplateGame.swift; sourceTree = "<group>"; };
 		BC7D47BF23C75B9F00E92E0D /* MTLAllocator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MTLAllocator.swift; sourceTree = "<group>"; };
@@ -215,6 +221,7 @@
 				BC471CCF241400CC005E65FB /* NetworkHandler.swift */,
 				BC471CD124142842005E65FB /* NetworkSession.swift */,
 				BC71D5FE241582520032BDE9 /* Button.swift */,
+				BC7979E8241C00FB008765D4 /* ButtonState.swift */,
 			);
 			path = Engine_Internal;
 			sourceTree = "<group>";
@@ -259,6 +266,8 @@
 		BC736A8D23D0E2830016B2F2 /* Assets */ = {
 			isa = PBXGroup;
 			children = (
+				BC0CC48B242157AD00B3A9A3 /* PongText.png */,
+				BC0CC4892421540C00B3A9A3 /* ChessText.png */,
 				BC71D6042415DDC10032BDE9 /* ButtonPressed.png */,
 				BC71D6002415B31A0032BDE9 /* ButtonUnpressed.png */,
 				BC734ADA2414A6DB00BBF179 /* Title.png */,
@@ -475,8 +484,10 @@
 				BC736AA923D21D860016B2F2 /* F.png in Resources */,
 				BCAA9A5A23B7144500DB3E34 /* Main.storyboard in Resources */,
 				BC736AAD23D21D860016B2F2 /* C.png in Resources */,
+				BC0CC48A2421540C00B3A9A3 /* ChessText.png in Resources */,
 				BC71D6022415B31A0032BDE9 /* ButtonUnpressed.png in Resources */,
 				BC736A9E23D2030F0016B2F2 /* Seven.png in Resources */,
+				BC0CC48C242157AD00B3A9A3 /* PongText.png in Resources */,
 				BC736AA023D2030F0016B2F2 /* Five.png in Resources */,
 				BC736AAF23D21D860016B2F2 /* G.png in Resources */,
 				BC72079C23FB90AD004F6F1E /* KnightBlack.png in Resources */,
@@ -514,6 +525,7 @@
 				BC74B93323B9AEF90019AFA4 /* OpenWorld.swift in Sources */,
 				BC734AD924149C5900BBF179 /* TitleScreen.swift in Sources */,
 				BC471CD0241400CC005E65FB /* NetworkHandler.swift in Sources */,
+				BC7979E9241C00FB008765D4 /* ButtonState.swift in Sources */,
 				BCAA9A8923B8653100DB3E34 /* Circle.swift in Sources */,
 				BC471CD224142842005E65FB /* NetworkSession.swift in Sources */,
 				BC703F3823E070F80098AE66 /* Piece.swift in Sources */,

@@ -16,7 +16,7 @@ class Pong: TemplateGame {
     private var p2MV = 0
     private var ballRadius: Float = 2
     
-    override init() {
+    required init() {
         super.init()
         name = "pong"
     }

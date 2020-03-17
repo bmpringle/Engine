@@ -17,6 +17,10 @@ class TemplateGame {
     //set in  ViewController.viewDidLoad before anything else, no need to change
     var aspectRatio: Float = 16/10
     
+    required init() {
+        
+    }
+    
     func fireLogic(viewController: ViewController) {
 
     }

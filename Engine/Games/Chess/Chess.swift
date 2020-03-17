@@ -16,7 +16,7 @@ class Chess: TemplateGame {
     var selectedID = -1
     var move: Color = Color.WHITE
     
-    override init() {
+    required init() {
         super.init()
         name = "chess"
     }
