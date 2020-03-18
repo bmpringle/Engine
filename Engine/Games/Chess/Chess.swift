@@ -15,6 +15,7 @@ class Chess: TemplateGame {
     var board: Board = Board(8)
     var selectedID = -1
     var move: Color = Color.WHITE
+    var checkWin = true
     
     required init() {
         super.init()
@@ -99,8 +100,10 @@ class Chess: TemplateGame {
                     sendDataToPeers(data: "\(selectedID)|\(block[0])|\(block[1])", viewController: viewController)
                     if(move == Color.BLACK) {
                         move = Color.WHITE
+                        checkWin = true
                     }else {
                         move = Color.BLACK
+                        checkWin = true
                     }
                 }
                 selectedID = -1
@@ -116,8 +119,10 @@ class Chess: TemplateGame {
                         sendDataToPeers(data: "\(selectedID)|\(block[0])|\(block[1])", viewController: viewController)
                         if(move == Color.BLACK) {
                             move = Color.WHITE
+                            checkWin = true
                         }else {
                             move = Color.BLACK
+                            checkWin = true
                         }
                     }
                     selectedID = -1
@@ -155,17 +160,33 @@ class Chess: TemplateGame {
                 }
             }
         }
-    
-       /* let bWin = board.hasWon(Color.BLACK)
-        let wWin = board.hasWon(Color.WHITE)
-        if(bWin) {
-            print("Black Wins")
-        }else if(wWin) {
-            print("White Wins")
-        }else if(wWin && bWin) {
-            print("How the hell does that even work")
-        }*/
-        
+        if(checkWin) {
+            var deep = [Piece]()
+            for i in board.pieces {
+                deep.append(i.copy() as! Piece)
+            }
+            let b_d_q = board.black_death_que
+            let w_d_q = board.white_death_que
+            
+            let bWin = board.hasWon(Color.BLACK)
+            board.pieces = deep
+            board.black_death_que = b_d_q
+            board.white_death_que = w_d_q
+            renderer.scene = self.createScene()
+            let wWin = board.hasWon(Color.WHITE)
+            board.pieces = deep
+            board.black_death_que = b_d_q
+            board.white_death_que = w_d_q
+            renderer.scene = self.createScene()
+            if(bWin) {
+                print("Black Wins")
+            }else if(wWin) {
+                print("White Wins")
+            }else if(wWin && bWin) {
+                print("How the hell does that even work")
+            }
+            checkWin = false
+        }
     }
 }
 

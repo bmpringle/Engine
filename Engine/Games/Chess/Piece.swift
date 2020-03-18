@@ -13,7 +13,7 @@ enum Color {
     case BLACK
 }
 
-protocol Piece {
+protocol Piece: NSCopying {
     func getMoveVectors() -> [SIMD2<Int>]
     func getBoardPlace() -> SIMD2<Int>
     func skipsPieces() -> Bool
@@ -51,6 +51,33 @@ class PieceImpl: Node, Piece {
         }
     }
     
+    func copy(with zone: NSZone? = nil) -> Any {
+        let p = PieceImpl()
+        p.ID = ID
+        p.moveVectors = moveVectors
+        p.magnitudes = magnitudes
+        p.place = place
+        p.canSkipPieces = canSkipPieces
+        p.squareSize = squareSize
+        p.ChessType = ChessType
+        p.color = color
+        p.vertices = vertices
+        p.children = children
+        p.xyz = xyz
+        p.yaw = yaw
+        p.pitch = pitch
+        p.roll = roll
+        p.type = type
+        p.scalar = scalar
+        p.allocator = allocator
+        p.vertex_function = vertex_function
+        p.fragment_function = fragment_function
+        p.root_node = root_node
+        p.texture_in_use = texture_in_use
+        p.texture_name = texture_name
+        return p
+    }
+    
     func setMoveVectors(_ vec: [SIMD2<Int>]) {
         self.moveVectors = vec
     }
@@ -83,6 +110,13 @@ class PieceImpl: Node, Piece {
     
     func getColor() -> Color {
         return color
+    }
+    
+    override init() {
+        ID = 0
+        color = Color.BLACK
+        place = SIMD2<Int>(0, 0)
+        super.init()
     }
     
     init(_ vectors: [SIMD2<Int>], _ magnitudes: [Int], _ pos: SIMD2<Int>, _ canSkip: Bool, _ scene: Scene, _ tR: SIMD3<Float>, _ squareSize: Float, _ id: Int, _ type: String, _ color: Color) {

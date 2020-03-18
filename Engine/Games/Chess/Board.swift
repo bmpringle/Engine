@@ -27,6 +27,7 @@ class Board {
         board.setCol2(SIMD4<Float>(1, 1, 1, 1))
         let boardNode = board.createBoard(xTiles: 8, yTiles: 8, true, scene: scene)
         scene.addChild(boardNode)
+        scene.addChild(Node())
         topRight = boardNode.getXYZ()
         pieces = [Piece]()
         
@@ -104,31 +105,19 @@ class Board {
     }
     
     func removePiece(_ ID: Int) {
+        print("rm")
         let n = pieces[ID]
+        print(white_death_que)
         if(n.getColor() == Color.BLACK) {
             n.setBoardPlace(place: black_death_que)
         }else {
             n.setBoardPlace(place: white_death_que)
         }
         advanceDeathQue(n.getColor())
-        //n.delete()
+        print(white_death_que)
+        n.setType("dead")
+        n.setMoveVectors([SIMD2<Int>]())
         pieces[ID] = n
-        
-        self.pieces.remove(at: ID)
-        
-        var pA = [Piece]()
-        var nPA = [Piece]()
-
-        for i in pieces {
-            pA.append(i)
-        }
-        
-        for i in 0..<pA.count {
-            let j = pA[i]
-            j.setID(id: i)
-            nPA.append(j)
-        }
-        pieces = nPA
     }
     
     func getRecentClickBlock(_ loc: SIMD2<Float>) -> SIMD2<Int> {
@@ -231,8 +220,9 @@ class Board {
     func getScene() -> Scene {
       //  scene.rootNode = Node()
         let tempScene = scene
+        tempScene.getRootNode().children[1].children = [Node]()
         for i in pieces {
-            tempScene.addChild(i as! Node)
+            tempScene.getRootNode().children[1].addChild(i as! Node)
         }
         return tempScene
     }
@@ -254,14 +244,19 @@ class Board {
         let vectors = piece.getMoveVectors()
         let pos = piece.getBoardPlace()
         
+        
+        if(block[0] > 8 || block[0] < 1 || block[1] > 8 || block[1] < 1) {
+            return false
+        }
+        
         if(pieces[id].getType() == "knight") {
             if(abs(pos[0] - block[0]) == 2) {
                 if(abs(pos[1]-block[1]) == 1) {
-                    return movePieceInternal(id: id, place: block, magRev: false, "knMV", sim)
+                    print("g");return movePieceInternal(id: id, place: block, magRev: false, "knMV", sim)
                 }
             }else if(abs(pos[1] - block[1]) == 2) {
                 if(abs(pos[0]-block[0]) == 1) {
-                    return movePieceInternal(id: id, place: block, magRev: false, "knMV", sim)
+                    print("h");return movePieceInternal(id: id, place: block, magRev: false, "knMV", sim)
                 }
             }
         }
@@ -270,11 +265,11 @@ class Board {
             if(getPiece(block) != nil) {
                 if(pieces[id].getColor() == Color.WHITE) {
                     if(block == SIMD2<Int>(pos[0]+1, pos[1]+1) || block == SIMD2<Int>(pos[0]-1, pos[1]+1)) {
-                        return movePieceInternal(id: id, place: block, magRev: false, "pwMVD", sim)
+                        print("i");return movePieceInternal(id: id, place: block, magRev: false, "pwMVD", sim)
                     }
                 }else {
                     if(block == SIMD2<Int>(pos[0]+1, pos[1]-1) || block == SIMD2<Int>(pos[0]-1, pos[1]-1)) {
-                        return movePieceInternal(id: id, place: block, magRev: false, "pwMVD", sim)
+                        print("j");return movePieceInternal(id: id, place: block, magRev: false, "pwMVD", sim)
                     }
                 }
             }
@@ -284,7 +279,7 @@ class Board {
             if(abs(pos[0]-block[0]) == abs(pos[1]-block[1])) {
                 if(vectors.contains(SIMD2<Int>(1, 1))) {
                     if(magnitude.contains(abs(pos[1]-block[1]))) {
-                        return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
+                        print("a");return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
                     }
                 }
             }
@@ -294,9 +289,9 @@ class Board {
                 if(vectors.contains(SIMD2<Int>(0, -1))) {
                     if(magnitude.contains(pos[1]-block[1])) {
                         if(piece.getType() == "pawn") {
-                            return movePieceInternal(id: id, place: block, magRev: true, "MV", sim)
+                            print("b");return movePieceInternal(id: id, place: block, magRev: true, "MV", sim)
                         }else {
-                            return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
+                            print("c");return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
                         }
                     }
                 }
@@ -304,9 +299,9 @@ class Board {
                 if(vectors.contains(SIMD2<Int>(0, 1))) {
                     if(magnitude.contains(block[1]-pos[1])) {
                         if(piece.getType() == "pawn") {
-                            return movePieceInternal(id: id, place: block, magRev: true, "MV", sim)
+                            print("c");return movePieceInternal(id: id, place: block, magRev: true, "MV", sim)
                         }else {
-                            return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
+                            print("d");return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
                         }
                     }
                 }
@@ -315,13 +310,13 @@ class Board {
             if(pos[0] > block[0]) {
                 if(vectors.contains(SIMD2<Int>(-1, 0))) {
                     if(magnitude.contains(pos[0]-block[0])) {
-                        return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
+                        print("e");return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
                     }
                 }
             }else if(pos[0] < block[0]){
                 if(vectors.contains(SIMD2<Int>(1, 0))) {
                     if(magnitude.contains(block[0]-pos[0])) {
-                        return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
+                        print("f");return movePieceInternal(id: id, place: block, magRev: false, "MV", sim)
                     }
                 }
             }
@@ -355,11 +350,13 @@ class Board {
                         var ID = id
                         var rem = false
                         let formerPlace = piece.getBoardPlace()
+                        var pieceToRemove = -1
                         
                         if(collideChecks) {
                                 if(!sim) {
                                     if(getPiece(place) != nil) {
                                         rem = true
+                                        pieceToRemove = (getPiece(place)?.getID())!
                                     }
                                     piece.setBoardPlace(place: place)
                                 }
@@ -376,10 +373,9 @@ class Board {
                         if(rem) {
                             let dPieceID = getPiece(place)!.getID()
                             if(dPieceID < ID) {
-                                ID = ID-1
+                                ////ID = ID-1
                             }
-                            removePiece(getPiece(place)!.getID())
-                            piece.setID(id: ID)
+                            removePiece(pieceToRemove)
                             pieces[ID] = piece
                         }
                         return true
@@ -393,7 +389,7 @@ class Board {
                 if(getPiece(place) != nil){
                     let dPieceID = getPiece(place)!.getID()
                     if(dPieceID < ID) {
-                        ID = ID-1
+                        ////ID = ID-1
                     }
                     removePiece(getPiece(place)!.getID())
                 }
@@ -401,7 +397,6 @@ class Board {
                 if(magRev) {
                     piece.removeMagnitude(2)
                 }
-                piece.setID(id: ID)
                 pieces[ID] = piece
             }
             return true
@@ -421,11 +416,13 @@ class Board {
                         var ID = id
                         var rem = false
                         let formerPlace = piece.getBoardPlace()
+                        var pieceToRemove = -1
                         
                         if(collideChecks) {
                                 if(!sim) {
                                     if(getPiece(place) != nil) {
                                         rem = true
+                                        pieceToRemove = (getPiece(place)?.getID())!
                                     }
                                     piece.setBoardPlace(place: place)
                                 }
@@ -442,10 +439,9 @@ class Board {
                         if(rem) {
                             let dPieceID = getPiece(place)!.getID()
                             if(dPieceID < ID) {
-                                ID = ID-1
+                                //ID = ID-1
                             }
-                            removePiece(getPiece(place)!.getID())
-                            piece.setID(id: ID)
+                            removePiece(pieceToRemove)
                             pieces[ID] = piece
                         }
                         return true
@@ -460,7 +456,7 @@ class Board {
                     if(getPiece(place) != nil){
                         let dPieceID = getPiece(place)!.getID()
                         if(dPieceID < ID) {
-                            ID = ID-1
+                            //ID = ID-1
                         }
                         removePiece(getPiece(place)!.getID())
                     }
@@ -468,7 +464,6 @@ class Board {
                     if(magRev) {
                         piece.removeMagnitude(2)
                     }
-                    piece.setID(id: ID)
                     pieces[ID] = piece
                 }
                 return true
@@ -533,11 +528,13 @@ class Board {
                         var ID = id
                         var rem = false
                         let formerPlace = piece.getBoardPlace()
+                        var pieceToRemove = -1
                         
                         if(collideChecks) {
                                 if(!sim) {
                                     if(getPiece(place) != nil) {
                                         rem = true
+                                        pieceToRemove = (getPiece(place)?.getID())!
                                     }
                                     piece.setBoardPlace(place: place)
                                 }
@@ -554,10 +551,9 @@ class Board {
                         if(rem) {
                             let dPieceID = getPiece(place)!.getID()
                             if(dPieceID < ID) {
-                                ID = ID-1
+                                //ID = ID-1
                             }
-                            removePiece(getPiece(place)!.getID())
-                            piece.setID(id: ID)
+                            removePiece(pieceToRemove)
                             pieces[ID] = piece
                         }
                         return true
@@ -571,7 +567,7 @@ class Board {
                     if(getPiece(place) != nil) {
                         let dPieceID = getPiece(place)!.getID()
                         if(dPieceID < ID) {
-                            ID = ID-1
+                            //ID = ID-1
                         }
                         removePiece(getPiece(place)!.getID())
                     }
@@ -580,7 +576,6 @@ class Board {
                         piece.removeMagnitude(2)
                     }
                 }
-                piece.setID(id: ID)
                 pieces[ID] = piece
                 return true
             }
@@ -602,29 +597,49 @@ class Board {
         if(canKingMove(place: place, king: king)) {
             return false
         }
+        
+        for i in -1...1 {
+            for j in -1...1 {
+                if(tryMovePiece(king.getID(), SIMD2<Int>(i, j), true)) {
+                    return false
+                }
+            }
+        }
+        var deep = [Piece]()
         for i in pieces {
-            if(color == i.getColor()) {
+            deep.append(i.copy() as! Piece)
+        }
+        for i in pieces {
+            if(i.getType() != "king" && i.getColor() == king.getColor()) {
                 for j in 0...8 {
                     for k in 0...8 {
-                        let ID = i.getID()
-                        let formerPlace = i.getBoardPlace()
-                        
-                        if(tryMovePiece(ID, SIMD2<Int>(j, k), true)) {
-                                i.setBoardPlace(place: place)
-                                pieces[ID] = i
-                        }
-                        if(isPieceInCheck(getKing(i.getColor()).getBoardPlace(), i.getColor(), SIMD2<Int>(j, k))) {
-                            i.setBoardPlace(place: formerPlace)
-                            pieces[ID] = i
+                        print("id is \(i.getID()), and mving to (\(j), \(k)) from (\(i.getBoardPlace()))")
+                        if(getPiece(SIMD2<Int>(j, k)) != nil) {
+                            if(getPiece(SIMD2<Int>(j, k))?.getColor() != i.getColor()) {
+                                if(tryMovePiece(i.getID(), SIMD2<Int>(j, k), false)) {
+                                    pieces = deep
+                                    print("SOLUTION :id is \(i.getID()), and mving to (\(j), \(k)) from (\(i.getBoardPlace()))")
+                                    return false
+                                }else {
+                                    pieces = deep
+                                }
+                            }
                         }else {
-                            i.setBoardPlace(place: formerPlace)
-                            pieces[ID] = i
-                            return false
+                            print(getPiece(SIMD2<Int>(1, 2)) != nil)
+                            if(tryMovePiece(i.getID(), SIMD2<Int>(j, k), false)) {
+                                pieces = deep
+                                print("asdf")
+                                print("SOLUTION :id is \(i.getID()), and mving to (\(j), \(k)) from (\(i.getBoardPlace()))")
+                                return false
+                            }else {
+                                pieces = deep
+                            }
                         }
                     }
                 }
             }
         }
+        pieces = deep
         return true
     }
     
