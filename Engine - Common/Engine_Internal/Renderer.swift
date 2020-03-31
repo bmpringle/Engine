@@ -90,6 +90,18 @@ class Renderer: NSObject, MTKViewDelegate {
         
     }
     
+    static func genericboxGen(scaleX: Float, scaleY: Float) -> [PosAndColor] {
+        return [
+            PosAndColor(pos:SIMD4<Float>(0, 0, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
+            PosAndColor(pos:SIMD4<Float>(0, scaleY, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
+            PosAndColor(pos:SIMD4<Float>(scaleX, scaleY, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
+            
+            PosAndColor(pos:SIMD4<Float>(0, 0, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
+            PosAndColor(pos:SIMD4<Float>(scaleX, scaleY, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
+            PosAndColor(pos:SIMD4<Float>(scaleX, 0, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
+        ]
+    }
+    
     static var genericbox = [
         PosAndColor(pos:SIMD4<Float>(0, 0, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),
         PosAndColor(pos:SIMD4<Float>(0, 1, 0, 1), color:SIMD4<Float>(1, 1, 0, 1)),

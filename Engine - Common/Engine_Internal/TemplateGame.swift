@@ -33,7 +33,7 @@ class TemplateGame {
         return TemplateGame()
     }
     
-    func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    func keyHandler(with event: NSUIEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
             default:
                 print(event.keyCode)
@@ -45,12 +45,8 @@ class TemplateGame {
         print("recieved \(data)")
     }
     
-    func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    func mouseHandler(with event: NSUIEvent, viewController: ViewController) -> NSUIEvent {
         return event
-    }
-    
-    func updateScene(renderer: Renderer) {
-
     }
 }
 

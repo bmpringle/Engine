@@ -10,21 +10,30 @@ import Foundation
 import Metal
 import MetalKit
 
-class OpenWorld: TemplateGame {
+class RPG: TemplateGame {
+    
+    var loadedArea: Area
+    var player: Player
+    let UNIT: Float = 2
     
     override func fireLogic(viewController: ViewController) {
-
+        loadedArea.doLogic(viewController: viewController)
+        updateScene(renderer: viewController.renderer)
     }
     
-    override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    override func mouseHandler(with event: NSUIEvent, viewController: ViewController) -> NSUIEvent {
         return event
+    }
+    
+    required init() {
+        player = Player()
+        player.msgToDisplay = "abc"
+        loadedArea = Area(player: player, backgroundTexture: "Title")
     }
     
     override func createScene() -> Scene {
         let scene = Scene()
-        let room = CPattern(3)
-        let rNode1 = room.createBoard(xTiles: 4, yTiles: 9, false, scene: scene)
-        scene.addChild(rNode1)
+        scene.addChild(loadedArea.asNode(UNIT, scene))
         return scene
     }
 
@@ -37,11 +46,11 @@ class OpenWorld: TemplateGame {
     }
     
     override func defGame() -> TemplateGame {
-        return OpenWorld()
+        return RPG()
     }
     
-    override func updateScene(renderer: Renderer) {
-
+    func updateScene(renderer: Renderer) {
+        renderer.scene.getRootNode().children[0] = loadedArea.asNode(UNIT, renderer.scene)
     }
 }
 

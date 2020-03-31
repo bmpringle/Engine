@@ -55,25 +55,20 @@ public class Node {
     var root_node: Node!
     var texture_in_use = false
     var texture_name = "Test"
+    var scalarX: Float = 1
+    var scalarY: Float = 1
+    var useCGImageForTexture: CGImage?
     
     func getXYZ() -> SIMD3<Float> {
         return xyz
     }
     
     func scaleX(_ f: Float) {
-        var verticesNew: [PosAndColor] = [PosAndColor]()
-        for i in vertices! {
-            verticesNew.append(PosAndColor(pos: SIMD4<Float>(i.pos[0]*f, i.pos[1], i.pos[2], i.pos[3]), color: i.color))
-        }
-        vertices = verticesNew
+        scalarX = scalarX*f
     }
     
     func scaleY(_ f: Float) {
-        var verticesNew: [PosAndColor] = [PosAndColor]()
-        for i in vertices! {
-            verticesNew.append(PosAndColor(pos: SIMD4<Float>(i.pos[0], i.pos[1]*f, i.pos[2], i.pos[3]), color: i.color))
-        }
-        vertices = verticesNew
+        scalarY = scalarY*f
     }
     
     func move(xyz: SIMD3<Float>) {
@@ -88,41 +83,57 @@ public class Node {
     }
     
     func createTextureManually() -> MTLTexture {
-         let nsimage = NSImage(named: NSImage.Name(texture_name))
         
-         let image = nsimage?.cgImage(forProposedRect: nil, context: nil, hints: nil)
-         
-         let desc = MTLTextureDescriptor()
-         desc.pixelFormat = .bgra8Unorm_srgb
-         desc.width = image!.width
-         desc.height = image!.height
-         
-         let texture: MTLTexture? = root_node.allocator?.getTexture(descriptor: desc)
-         
-         let reigon: MTLRegion = MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: image!.width, height: image!.height, depth: 1))
-         
-         let nsdata: NSMutableData = NSMutableData(data: (nsimage?.tiffRepresentation)!)
-         let nsdatacopy: NSMutableData = nsdata.mutableCopy() as! NSMutableData
-         
-         let bytesPerRow = image!.bytesPerRow
-         let rows = image?.height
-         
-         print(rows!)
-         print(bytesPerRow)
-         print(nsdata.length)
-         print(nsdatacopy.length)
-         for i in 0..<rows! {
-             print(i)
-             let bytes = NSData(data: nsdata.subdata(with: NSRange(location: i*bytesPerRow, length: bytesPerRow))).bytes
-             nsdatacopy.replaceBytes(in: NSRange(location: rows!*bytesPerRow-(i*bytesPerRow)-bytesPerRow, length: bytesPerRow), withBytes: bytes)
-         }
-         
-         texture?.replace(region: reigon, mipmapLevel: 0, withBytes: nsdata.bytes, bytesPerRow: image!.bytesPerRow)
-         return texture!
+        if(useCGImageForTexture == nil) {
+             let nsimage = NSUIImage(named: NSUIImage.Name(texture_name))
+             let cgimage = nsimage?.cgImage(forProposedRect: nil, context: nil, hints: nil)
+             let context = CGContext(data: nil, width: cgimage!.width, height: cgimage!.height, bitsPerComponent: cgimage!.bitsPerComponent, bytesPerRow: cgimage!.bytesPerRow, space: cgimage!.colorSpace!, bitmapInfo: cgimage!.bitmapInfo.rawValue)
+             let vertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(cgimage!.height))
+             context!.concatenate(vertical)
+             context!.draw(cgimage!, in: CGRect(x: 0, y: 0, width: cgimage!.width, height: cgimage!.height))
+             let desc = MTLTextureDescriptor()
+             desc.pixelFormat = .bgra8Unorm_srgb
+             desc.width = cgimage!.width
+             desc.height = cgimage!.height
+             
+             let texture: MTLTexture? = root_node.allocator?.getTexture(descriptor: desc)
+             
+             let region: MTLRegion = MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: cgimage!.width, height: cgimage!.height, depth: 1))
+             
+             let bytes = context!.data!
+                 print("texture_name: " + texture_name)
+             print(bytes)
+            
+             texture!.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: cgimage!.bytesPerRow)
+             return texture!
+        }else {
+            print("cgimg")
+            let cgimage = useCGImageForTexture
+            let context = CGContext(data: nil, width: cgimage!.width, height: cgimage!.height, bitsPerComponent: cgimage!.bitsPerComponent, bytesPerRow: cgimage!.bytesPerRow, space: cgimage!.colorSpace!, bitmapInfo: cgimage!.bitmapInfo.rawValue)
+             let vertical = CGAffineTransform(a: 1, b: 0, c: 0, d: -1, tx: 0, ty: CGFloat(cgimage!.height))
+             context!.concatenate(vertical)
+             context!.draw(cgimage!, in: CGRect(x: 0, y: 0, width: cgimage!.width, height: cgimage!.height))
+             let desc = MTLTextureDescriptor()
+             desc.pixelFormat = .bgra8Unorm_srgb
+             desc.width = cgimage!.width
+             desc.height = cgimage!.height
+             
+             let texture: MTLTexture? = root_node.allocator?.getTexture(descriptor: desc)
+             
+             let region: MTLRegion = MTLRegion(origin: MTLOrigin(x: 0, y: 0, z: 0), size: MTLSize(width: cgimage!.width, height: cgimage!.height, depth: 1))
+             
+             let bytes = context!.data!
+                 print("texture_name: " + texture_name)
+             print(bytes)
+            
+             texture!.replace(region: region, mipmapLevel: 0, withBytes: bytes, bytesPerRow: cgimage!.bytesPerRow)
+             return texture!
+        }
+
     }
     
     func createTexture() -> MTLTexture {
-        let nsimage = NSImage(named: NSImage.Name(texture_name))
+        let nsimage = NSUIImage(named: NSUIImage.Name(texture_name))
         let image = nsimage?.cgImage(forProposedRect: nil, context: nil, hints: nil)
         
         let textureloader = MTKTextureLoader(device: (root_node.allocator?.getDevice())!)
@@ -159,7 +170,11 @@ public class Node {
         let pMatrix = float4x4(SIMD4<Float>(cos(radians_from_degrees(pitch)), 0, sin(radians_from_degrees(pitch)), 0), SIMD4<Float>(0, 1, 0, 0), SIMD4<Float>(-sin(radians_from_degrees(pitch)), 0, cos(radians_from_degrees(pitch)), 0), SIMD4<Float>(0, 0, 0, 0))
         let rMatrix = float4x4(SIMD4<Float>(cos(radians_from_degrees(roll)), -sin(radians_from_degrees(roll)), 0, 0), SIMD4<Float>(sin(radians_from_degrees(roll)), cos(radians_from_degrees(roll)), 0, 0), SIMD4<Float>(0, 0, 1, 0), SIMD4<Float>(0, 0, 0, 0))
         let mvMatrix = float4x4(SIMD4<Float>(0, 0, 0, xyz[0]), SIMD4<Float>(0, 0, 0, xyz[1]), SIMD4<Float>(0, 0, 0, xyz[2]), SIMD4<Float>(0, 0, 0, 1))
-        return(scalar*(yMatrix*pMatrix*rMatrix))+mvMatrix
+        return(yMatrix*pMatrix*rMatrix)+mvMatrix
+    }
+    
+    func getScaledPos(f: SIMD4<Float>) -> float4 {
+        return SIMD4<Float>(f[0]*scalarX*scalar, f[1]*scalarY*scalar, f[2], f[3])
     }
     
     init(vertices: [PosAndColor]?, children: [Node]?, _ root: Node) {
@@ -173,9 +188,12 @@ public class Node {
         root_node = root
     }
  
-    init(vertices: [PosAndColor]?, children: [Node]?, _ root: Node, _ texture: Bool) {
+    init(vertices: [PosAndColor]?, children: [Node]?, _ root: Node, _ texture_name: String, _ shader: String) {
         self.vertices = vertices
-        self.texture_in_use = texture
+        self.texture_in_use = true
+        self.texture_name = texture_name
+        self.fragment_function = shader
+        
         if(children != nil) {
             for i in 0..<children!.count {
                 self.children.append(children![i])
@@ -205,9 +223,9 @@ public class Node {
 
     func renderNodeInternal(_ renderEncoder: MTLRenderCommandEncoder!, _ device: MTLDevice, _ allocator: MTLAllocator, _ descriptor: MTLRenderPipelineDescriptor) {
         var worldVertices: [PosAndColorTexture] = []
-        
+        print(getWorldMatrix())
         for i in 0..<vertices!.count {
-            worldVertices.append(PosAndColorTexture(pos: vertices![i].pos*getWorldMatrix(), color: vertices![i].color, texCoords: SIMD2<Float>(vertices![i].pos[0], vertices![i].pos[1])))
+            worldVertices.append(PosAndColorTexture(pos: (getScaledPos(f: vertices![i].pos))*getWorldMatrix(), color: vertices![i].color, texCoords: SIMD2<Float>(vertices![i].pos[0], vertices![i].pos[1])))
         }
         
         let lib = device.makeDefaultLibrary()
@@ -234,8 +252,12 @@ public class Node {
             renderEncoder.setRenderPipelineState(allocator.getPipelineState(ID: "default")!)
         }
         
+        if(useCGImageForTexture != nil) {
+            print("cijmg")
+        }
+        
         if(texture_in_use) {
-            renderEncoder.setFragmentTexture(createTexture(), index: 0)
+            renderEncoder.setFragmentTexture(createTextureManually(), index: 0)
         }
         
         let buffer = allocator.getBuffer(bufByteAmnt: worldVertices.count*MemoryLayout<PosAndColorTexture>.stride, bytes: worldVertices)

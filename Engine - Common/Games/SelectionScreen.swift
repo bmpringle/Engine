@@ -31,7 +31,7 @@ class SelectionScreen: TemplateGame {
         }
     }
     
-    override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    override func mouseHandler(with event: NSUIEvent, viewController: ViewController) -> NSUIEvent {
         return event
     }
     
@@ -67,14 +67,31 @@ class SelectionScreen: TemplateGame {
         return Button(children: nil, scene.getRootNode(), state: state)
     }
     
+    func rpgButton(scene: Scene) -> Button {
+        let state = ButtonState()
+        state.scale(20)
+        state.setX(-15)
+        state.setY(0)
+        state.setLength(30)
+        state.setWidth(20)
+        state.texture_in_use = true
+        state.fragment_function = "fragment_texture_shader"
+        state.texture_pressed = "ButtonPressed"
+        state.texture_unpressed = "ButtonUnpressed"
+        //state.addOverlay("RPGText")
+        state.action = RPG.self
+        return Button(children: nil, scene.getRootNode(), state: state)
+    }
+    
     override func createScene() -> Scene {
         let scene = Scene()
         scene.addChild(chessButton(scene: scene))
         scene.addChild(pongButton(scene: scene))
+        scene.addChild(rpgButton(scene: scene))
         return scene
     }
 
-    override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    override func keyHandler(with event: NSUIEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
             case 18:
                 viewController.swapGame(game: Pong())
@@ -83,7 +100,7 @@ class SelectionScreen: TemplateGame {
                 viewController.swapGame(game: Chess())
                 return true
             case 20:
-                viewController.swapGame(game: OpenWorld())
+                viewController.swapGame(game: RPG())
                 return true
             default:
                 print(event.keyCode)
@@ -91,7 +108,7 @@ class SelectionScreen: TemplateGame {
        }
     }
 
-    override func updateScene(renderer: Renderer) {
+    func updateScene(renderer: Renderer) {
 
     }
 }

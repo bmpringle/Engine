@@ -54,7 +54,7 @@ class Chess: TemplateGame {
         return
     }
     
-    override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    override func keyHandler(with event: NSUIEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
         case 13:
             viewController.renderer.netHandler.delegate.sendTest()
@@ -138,7 +138,7 @@ class Chess: TemplateGame {
         return event
     }
     
-    override func updateScene(renderer: Renderer) {
+    func updateScene(renderer: Renderer) {
         for i in 0..<board.getPieces().count {
             if(board.getPieces()[i].getType() == "pawn") {
                 if(board.getPieces()[i].getBoardPlace()[1] == 1 || board.getPieces()[i].getBoardPlace()[1] == 8) {

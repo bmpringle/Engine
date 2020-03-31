@@ -35,20 +35,20 @@ class ButtonState {
     }
     
     init() {
-        monitor = NSEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
+        monitor = NSUIEvent.addLocalMonitorForEvents(matching: .leftMouseDown) {event in
             return self.handleMouseDown(with: event)
         }
     }
     
     deinit {
-        NSEvent.removeMonitor(monitor!)
+        NSUIEvent.removeMonitor(monitor!)
     }
     
     @objc func resetstate() {
         pressed = 0
     }
     
-    func handleMouseDown(with event: NSEvent) -> NSEvent {
+    func handleMouseDown(with event: NSUIEvent) -> NSUIEvent {
         var location = SIMD2<Float>(Float(event.locationInWindow.x/(event.window?.contentView?.bounds.size.width)!), Float(event.locationInWindow.y/(event.window?.contentView?.bounds.size.height)!))
         location = (location*200)-100
         if(location[0] >= x && location[0] <= x+length) {

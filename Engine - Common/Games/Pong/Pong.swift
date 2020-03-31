@@ -33,7 +33,7 @@ class Pong: TemplateGame {
         }
     }
     
-    override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    override func mouseHandler(with event: NSUIEvent, viewController: ViewController) -> NSUIEvent {
         return event
     }
     
@@ -105,7 +105,7 @@ class Pong: TemplateGame {
     public var gameStart = false
     public var gameOver = false
 
-    override func updateScene(renderer: Renderer) {
+    func updateScene(renderer: Renderer) {
         print(speed)
         print(renderer.scene.getRootNode().children[2].getXYZ())
         //Move Ball

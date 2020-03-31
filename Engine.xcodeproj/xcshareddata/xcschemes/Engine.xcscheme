@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "BCAA9A4E23B7144100DB3E34"
-               BuildableName = "Engine.app"
-               BlueprintName = "Engine"
+               BuildableName = "Engine - MACOS.app"
+               BlueprintName = "Engine - MACOS"
                ReferencedContainer = "container:Engine.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -65,8 +65,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BCAA9A4E23B7144100DB3E34"
-            BuildableName = "Engine.app"
-            BlueprintName = "Engine"
+            BuildableName = "Engine - MACOS.app"
+            BlueprintName = "Engine - MACOS"
             ReferencedContainer = "container:Engine.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -82,8 +82,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "BCAA9A4E23B7144100DB3E34"
-            BuildableName = "Engine.app"
-            BlueprintName = "Engine"
+            BuildableName = "Engine - MACOS.app"
+            BlueprintName = "Engine - MACOS"
             ReferencedContainer = "container:Engine.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

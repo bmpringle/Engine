@@ -18,7 +18,7 @@ class TitleScreen: TemplateGame {
         
     }
     
-    override func mouseHandler(with event: NSEvent, viewController: ViewController) -> NSEvent {
+    override func mouseHandler(with event: NSUIEvent, viewController: ViewController) -> NSUIEvent {
         return event
     }
     
@@ -34,7 +34,7 @@ class TitleScreen: TemplateGame {
         return scene
     }
 
-    override func keyHandler(with event: NSEvent, viewController: ViewController) -> Bool {
+    override func keyHandler(with event: NSUIEvent, viewController: ViewController) -> Bool {
        switch Int(event.keyCode) {
             case 36:
                 viewController.swapGame(game: SelectionScreen())
@@ -45,7 +45,7 @@ class TitleScreen: TemplateGame {
        }
     }
 
-    override func updateScene(renderer: Renderer) {
+    func updateScene(renderer: Renderer) {
 
     }
 }

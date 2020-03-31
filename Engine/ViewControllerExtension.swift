@@ -11,18 +11,7 @@ import MetalKit
 import simd
 import Metal
 
-typealias Game = TitleScreen
-
-class ViewController: NSViewController {
-        
-    var mtkView: MTKView {
-        return view as! MTKView
-    }
-    
-    var renderer: Renderer!
-    
-    var menuGame: TemplateGame! = nil
-    var currentGame: TemplateGame = Game()
+extension ViewController {
     
     @objc func fireLogic() {
         currentGame.fireLogic(viewController: self)

@@ -33,7 +33,7 @@ class Button: Node {
                 overlay.fragment_function = state.fragment_function
                 overlay.texture_name = state.overlayName
                 print("added Overlay")
-                print(NSImage(named: NSImage.Name("Test")) != nil)
+                print(NSUIImage(named: NSImage.Name("Test")) != nil)
                 addChild(overlay)
             }
         }
